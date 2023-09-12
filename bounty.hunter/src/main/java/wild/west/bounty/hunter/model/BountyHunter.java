@@ -31,7 +31,7 @@ public class BountyHunter extends RepresentationModel<BountyHunter> implements S
     private String cowboyName;
 
     @Column(name = "reputation", nullable = false, length = 80)
-    private Reputation reputation;
+    private String reputation;
 
     @Column(name = "town_name", nullable = false, length = 80)
     private String origin;

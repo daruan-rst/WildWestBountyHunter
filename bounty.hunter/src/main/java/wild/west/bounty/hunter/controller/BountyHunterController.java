@@ -17,7 +17,8 @@ import org.springframework.web.bind.annotation.*;
 import wild.west.bounty.hunter.model.BountyHunter;
 import wild.west.bounty.hunter.service.BountyHunterService;
 
-@RestController("/api/bounty-hunter/v1")
+@RestController
+@RequestMapping("/api/bounty-hunter/v1")
 @Tag(name = "Bounty Hunter", description = "Endpoints para a entidade Bounty Hunter")
 @AllArgsConstructor
 public class BountyHunterController {
