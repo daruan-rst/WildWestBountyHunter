@@ -6,18 +6,18 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.hateoas.RepresentationModel;
-import wild.west.bounty.hunter.model.enums.Reputation;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity
-@Table(name = "bounty_hunter")
+@Table(name = "saloon")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class BountyHunter extends RepresentationModel<BountyHunter> implements Serializable {
+public class Town extends RepresentationModel<Town> implements Serializable {
 
     @Serial
     private static final long serialVersionUID =  1L;
@@ -27,14 +27,12 @@ public class BountyHunter extends RepresentationModel<BountyHunter> implements S
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "cowboy_name", nullable = false, length = 80)
-    private String cowboyName;
+    @Column(name = "name", nullable = false, length = 80)
+    private String townName;
 
-    @Column(name = "reputation", nullable = false, length = 80)
-    private Reputation reputation;
-
-    @Column(name = "town_origin", nullable = false, length = 80)
-    private Town origin;
+    @Column(name = "town_name", nullable = false, length = 80)
+    @OneToMany(mappedBy = "town")
+    private Set<Saloon> saloons;
 
 
 }
