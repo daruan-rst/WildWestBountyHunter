@@ -1,0 +1,44 @@
+package wild.west.bounty.hunter.model;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.io.Serial;
+import java.io.Serializable;
+import java.math.BigDecimal;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(name="contract")
+public class BountyContract implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    @Serial
+    private static final long serialVersionUID =  1L;
+
+    @Column(name="poster_name")
+    private String posterName;
+
+    @Column(name="reward")
+    private BigDecimal reward;
+
+    @OneToOne
+    @Column(name="outlaw")
+    private BountyHunter outlaw;
+
+    @Column(name="outlaw_description")
+    private String outlawDescription;
+
+    @OneToOne
+    @Column(name="last_place")
+    private Town lastPlace;
+
+}

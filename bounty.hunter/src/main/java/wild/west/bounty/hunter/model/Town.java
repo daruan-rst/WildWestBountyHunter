@@ -23,7 +23,6 @@ public class Town extends RepresentationModel<Town> implements Serializable {
     private static final long serialVersionUID =  1L;
 
     @Id
-    @Getter
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
