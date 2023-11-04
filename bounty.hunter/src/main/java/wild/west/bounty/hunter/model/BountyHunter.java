@@ -12,12 +12,12 @@ import java.io.Serial;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "bounty_hunter")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class BountyHunter extends RepresentationModel<BountyHunter> implements Serializable {
+@DiscriminatorValue("BOUNTY_HUNTER")
+public class BountyHunter extends Person {
 
     @Serial
     private static final long serialVersionUID =  1L;
