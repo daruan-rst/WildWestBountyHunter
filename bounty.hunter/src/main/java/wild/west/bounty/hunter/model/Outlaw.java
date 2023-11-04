@@ -4,16 +4,17 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.hateoas.RepresentationModel;
-import wild.west.bounty.hunter.model.enums.Reputation;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,25 +22,17 @@ import java.io.Serializable;
 @Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonTypeInfo(use = com.fasterxml.jackson.annotation.JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "objectType", visible = true)
-@JsonTypeName("BOUNTY_HUNTER")
-@DiscriminatorValue("BOUNTY_HUNTER")
+@JsonTypeName("OUTLAW")
+@DiscriminatorValue("OUTLAW")
 @Entity
-public class BountyHunter extends Person {
+public class Outlaw extends Person implements Serializable {
 
     @Serial
     private static final long serialVersionUID =  1L;
 
     @JsonIgnore
-    public static final String OBJECT_TYPE = "BOUNTY_HUNTER";
+    public static final String OBJECT_TYPE = "OUTLAW";
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(name = "reputation", nullable = false, length = 80)
-    private Reputation reputation;
-
-
+    @Column(name="bounty_value")
+    private static BigDecimal bountyValue;
 }
-
-

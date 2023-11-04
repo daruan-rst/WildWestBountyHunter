@@ -1,8 +1,7 @@
 package wild.west.bounty.hunter.model;
 
 import com.fasterxml.jackson.annotation.*;
-import jakarta.persistence.Column;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.hateoas.RepresentationModel;
@@ -10,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 @Table(name = "person")
 @Getter
@@ -18,7 +18,11 @@ import java.io.Serializable;
 @JsonTypeInfo(use = com.fasterxml.jackson.annotation.JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "objectType", visible = true)
 @JsonTypeName("PERSON")
 @JsonSubTypes({@Type(value = Sheriff.class, name = "SHERIFF"),
-        @Type(value = BountyHunter.class, name = "BOUNTY_HUNTER")})
+        @Type(value = BountyHunter.class, name = "BOUNTY_HUNTER"),
+        @Type(value = Outlaw.class, name = "OUTLAW")})
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "_OBJECT_TYPE", length = 64)
+@Entity
 public class Person extends RepresentationModel<Person> implements Serializable {
 
     @Serial
@@ -27,4 +31,13 @@ public class Person extends RepresentationModel<Person> implements Serializable 
     @Column(name = "_OBJECT_TYPE", insertable = false, updatable = false)
     @JsonIgnore
     private String objectType;
+
+    @Column(name = "name", nullable = false, length = 80)
+    private String name;
+
+    @Column(name = "town_origin", nullable = false, length = 80)
+    private Town origin;
+
+    @Column(name="money")
+    private static BigDecimal money;
 }
