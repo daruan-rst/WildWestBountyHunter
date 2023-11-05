@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Table(name = "person")
 @Getter
@@ -39,5 +40,8 @@ public class Person extends RepresentationModel<Person> implements Serializable 
     private Town origin;
 
     @Column(name="money")
-    private static BigDecimal money;
+    private BigDecimal money;
+
+    @ManyToOne(mappedBy="person")
+    private List<Equipment> equipments;
 }
