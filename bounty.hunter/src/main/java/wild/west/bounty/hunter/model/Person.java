@@ -42,6 +42,6 @@ public class Person extends RepresentationModel<Person> implements Serializable 
     @Column(name="money")
     private BigDecimal money;
 
-    @ManyToOne(mappedBy="person")
+    @ManyToOne
     private List<Equipment> equipments;
 }
