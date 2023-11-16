@@ -29,6 +29,10 @@ public class Person extends RepresentationModel<Person> implements Serializable 
     @Serial
     private static final long serialVersionUID = 1L;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     @Column(name = "_OBJECT_TYPE", insertable = false, updatable = false)
     @JsonIgnore
     private String objectType;

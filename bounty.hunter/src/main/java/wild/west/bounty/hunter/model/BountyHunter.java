@@ -32,10 +32,6 @@ public class BountyHunter extends Person {
     @JsonIgnore
     public static final String OBJECT_TYPE = "BOUNTY_HUNTER";
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     @Column(name = "reputation", nullable = false, length = 80)
     private Reputation reputation;
 
