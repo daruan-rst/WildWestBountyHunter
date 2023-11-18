@@ -11,6 +11,7 @@ import org.springframework.hateoas.PagedModel;
 import org.springframework.stereotype.Service;
 import wild.west.bounty.hunter.controller.PersonController;
 import wild.west.bounty.hunter.exceptions.ResourceNotFoundException;
+import wild.west.bounty.hunter.model.Equipment;
 import wild.west.bounty.hunter.model.Person;
 import wild.west.bounty.hunter.repositories.PersonRepository;
 
@@ -68,7 +69,7 @@ public class PersonService {
     public Person createPerson(Person person){
         log.info("Creating person");
         person = personRepository.save(person);
-        person.add(linkTo(methodOn(PersonController.class).findById(person.getId())).withSelfRel());
+        person.add(linkTo(methodOn(PersonController.class).createPerson(person)).withSelfRel());
         return person;
     }
 
@@ -78,14 +79,23 @@ public class PersonService {
         person.setOrigin(oldPerson.getOrigin());
         person.setOrigin(oldPerson.getOrigin());
         person = personRepository.save(person);
-        person.add(linkTo(methodOn(PersonController.class).findById(id)).withSelfRel());
+        person.add(linkTo(methodOn(PersonController.class).updatePerson(id, person)).withSelfRel());
         return person;
+    }
+
+    public Person addEquipment(Equipment equipment, Long id){
+        Person person = findById(id);
+
+        log.info("Adding an equipment to a person");
+        person.getEquipments().add(equipment);
+
+        return personRepository.save(person);
     }
 
     public void deletePersonById(Long id){
         log.info("Deleting person by id");
         Person person = personRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No person found for this ID"));
-        person.add(linkTo(methodOn(PersonController.class).findById(id)).withSelfRel());
+        person.add(linkTo(methodOn(PersonController.class).deletePerson(id)).withSelfRel());
         personRepository.deleteById(id);
     }
 }
