@@ -14,6 +14,7 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import wild.west.bounty.hunter.model.Equipment;
 import wild.west.bounty.hunter.model.Person;
 import wild.west.bounty.hunter.service.PersonService;
 
@@ -146,6 +147,24 @@ public class PersonController {
             @RequestBody Person person
     ){
         return personService.updatePerson(person, id);
+    }
+
+    @PatchMapping(value = "/{id}")
+    @Operation(summary = "Updates a bounty hunter", description = "Updates a bounty hunter",
+            tags = {"Person"},
+            responses = {
+                    @ApiResponse(description = "Sucess", responseCode = "200",
+                            content = @Content(schema = @Schema(implementation = Person.class))),
+                    @ApiResponse(description = "BadRequest", responseCode = "400", content = @Content),
+                    @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
+                    @ApiResponse(description = "Not found", responseCode = "404", content = @Content),
+                    @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
+            })
+    public Person addEquipment(
+            @PathVariable Long id,
+            @RequestBody Equipment equipment
+    ){
+        return personService.addEquipment(equipment, id);
     }
 
     @DeleteMapping(value = "/{id}")
