@@ -32,7 +32,7 @@ public class BountyContract implements Serializable {
 
     @OneToOne
     @Column(name="outlaw")
-    private BountyHunter outlaw;
+    private Outlaw outlaw;
 
     @Column(name="outlaw_description")
     private String outlawDescription;
