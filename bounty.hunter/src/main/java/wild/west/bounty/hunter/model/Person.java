@@ -48,4 +48,6 @@ public class Person extends RepresentationModel<Person> implements Serializable 
 
     @ManyToOne
     private List<Equipment> equipments;
+
+    private boolean alive;
 }

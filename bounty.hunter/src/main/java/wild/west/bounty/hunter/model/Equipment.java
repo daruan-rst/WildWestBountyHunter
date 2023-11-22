@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 @Getter
 @Setter
@@ -27,4 +28,6 @@ public class Equipment implements Serializable {
     @OneToMany(mappedBy="person")
     @Column(name="person_id")
     private Person person;
+
+    private BigDecimal value;
 }

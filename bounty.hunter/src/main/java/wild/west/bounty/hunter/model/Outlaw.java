@@ -34,5 +34,5 @@ public class Outlaw extends Person implements Serializable {
     public static final String OBJECT_TYPE = "OUTLAW";
 
     @Column(name="bounty_value")
-    private static BigDecimal bountyValue;
+    private BigDecimal bountyValue;
 }

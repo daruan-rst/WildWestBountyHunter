@@ -12,10 +12,13 @@ import org.springframework.stereotype.Service;
 import wild.west.bounty.hunter.controller.PersonController;
 import wild.west.bounty.hunter.exceptions.ResourceNotFoundException;
 import wild.west.bounty.hunter.model.Equipment;
+import wild.west.bounty.hunter.model.Outlaw;
 import wild.west.bounty.hunter.model.Person;
 import wild.west.bounty.hunter.repositories.PersonRepository;
+import wild.west.bounty.hunter.response.MurderResponse;
+import wild.west.bounty.hunter.util.PersonUtils;
 
-import java.util.List;
+import java.math.BigDecimal;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -69,6 +72,7 @@ public class PersonService {
     public Person createPerson(Person person){
         log.info("Creating person");
         person = personRepository.save(person);
+        person.setAlive(true);
         person.add(linkTo(methodOn(PersonController.class).createPerson(person)).withSelfRel());
         return person;
     }
@@ -97,5 +101,36 @@ public class PersonService {
         Person person = personRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No person found for this ID"));
         person.add(linkTo(methodOn(PersonController.class).deletePerson(id)).withSelfRel());
         personRepository.deleteById(id);
+    }
+
+    public MurderResponse killSomebody(long killerId, long victimId){
+        Person victim = findById(victimId);
+        PersonUtils.validateIfAlive(victim);
+
+        Person killer = findById(killerId);
+        PersonUtils.validateKiller(killer);
+
+        victim.setAlive(false);
+
+        BigDecimal bounty = calculateBounty(victim);
+        if (killer instanceof Outlaw){
+            ((Outlaw) killer).setBountyValue(((Outlaw) killer).getBountyValue().add(calculateBounty(victim)));
+        }else{
+            killer = ((Outlaw) killer);
+            ((Outlaw) killer).setBountyValue(calculateBounty(victim));
+        }
+
+        personRepository.save(killer);
+        personRepository.save(victim);
+        return new MurderResponse(killer, victim);
+    }
+
+    private BigDecimal calculateBounty(Person victim){
+        return victim.getMoney().add(victim.getEquipments()
+                .stream()
+                .map(eq -> eq.getValue()).toList()
+                    .stream()
+                    .reduce( (a,b) -> BigDecimal.ZERO.add(b))
+                    .get());
     }
 }
