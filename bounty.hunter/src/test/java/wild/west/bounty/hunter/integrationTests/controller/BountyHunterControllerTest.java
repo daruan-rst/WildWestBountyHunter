@@ -1,27 +1,23 @@
 package wild.west.bounty.hunter.integrationTests.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.builder.RequestSpecBuilder;
-import io.restassured.filter.log.LogDetail;
-import io.restassured.filter.log.RequestLoggingFilter;
-import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.specification.RequestSpecification;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import wild.west.bounty.hunter.configs.TestConfigs;
 import wild.west.bounty.hunter.integrationTests.AbstractIntegrationTest;
 import wild.west.bounty.hunter.model.BountyHunter;
-import wild.west.bounty.hunter.model.enums.Reputation;
 import wild.west.bounty.hunter.wrappedModel.WrappedBountyHunter;
 
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static wild.west.bounty.hunter.model.enums.Reputation.BLOODTHIRTY;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class BountyHunterControllerTest extends AbstractIntegrationTest {
@@ -62,9 +58,9 @@ public class BountyHunterControllerTest extends AbstractIntegrationTest {
         List<BountyHunter> bountyHunterList = bountyHunterWrapped.getEmbedded().getBountyHunterList();
         BountyHunter lastBountyHunter = bountyHunterList.get(bountyHunterList.size()-1);
 
-        Assertions.assertEquals("Simone dos prazeres", lastBountyHunter.getCowboyName());
-        Assertions.assertEquals("Lapa", lastBountyHunter.getOrigin());
-        Assertions.assertEquals("BLOODTHIRTY", lastBountyHunter.getReputation());
+        Assertions.assertEquals("Simone dos prazeres", lastBountyHunter.getName());
+        Assertions.assertEquals("Lapa", lastBountyHunter.getOrigin().getTownName());
+        Assertions.assertEquals("BLOODTHIRTY", lastBountyHunter.getReputation().toString());
 
 
     }

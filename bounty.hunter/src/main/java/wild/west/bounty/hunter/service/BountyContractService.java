@@ -16,7 +16,6 @@ import wild.west.bounty.hunter.repositories.TownRepository;
 import wild.west.bounty.hunter.request.BountyContractRequest;
 
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 @Log
 @AllArgsConstructor
@@ -32,11 +31,11 @@ public class BountyContractService {
     public BountyContract createContract(BountyContractRequest contractRequest){
         Town lastTown  = townRepository.findByTownName(contractRequest.lastTown())
                 .orElseThrow(()->new ResourceNotFoundException(String.format("Could not find a town by the name of: %s",
-                                        contractRequest.getLastTown())));
+                                        contractRequest.lastTown())));
 
         Person person = personRepository.findByNameAndObjectType(contractRequest.outlawName(), "OUTLAW")
                 .orElseThrow(()->new ResourceNotFoundException(String.format("Could not find a person by the name of: %s",
-                        contractRequest.getOutlawName())));
+                        contractRequest.outlawName())));
 
         if (!(person instanceof Outlaw)){
             throw new NotOutlawException(person);
