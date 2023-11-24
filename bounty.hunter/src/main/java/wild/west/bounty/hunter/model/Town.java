@@ -12,7 +12,7 @@ import java.io.Serializable;
 import java.util.Set;
 
 @Entity
-@Table(name = "saloon")
+@Table(name = "town")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -32,6 +32,8 @@ public class Town extends RepresentationModel<Town> implements Serializable {
     @Column(name = "town_name", nullable = false, length = 80)
     @OneToMany(mappedBy = "town")
     private Set<Saloon> saloons;
+
+
 
 
 }

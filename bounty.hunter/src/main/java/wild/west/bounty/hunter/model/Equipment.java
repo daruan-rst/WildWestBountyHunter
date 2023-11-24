@@ -25,8 +25,8 @@ public class Equipment implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany(mappedBy="person")
-    @Column(name="person_id")
+    @ManyToOne
+    @JoinColumn(name="person_id")
     private Person person;
 
     private BigDecimal value;

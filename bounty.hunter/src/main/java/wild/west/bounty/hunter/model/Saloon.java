@@ -29,7 +29,8 @@ public class Saloon extends RepresentationModel<Saloon> implements Serializable 
     @Column(name = "saloon_name", nullable = false, length = 80)
     private String saloonName;
 
-    @Column(name = "town_name", nullable = false, length = 80)
+    @ManyToOne
+    @JoinColumn(name = "town_name", nullable = false)
     private Town town;
 
 

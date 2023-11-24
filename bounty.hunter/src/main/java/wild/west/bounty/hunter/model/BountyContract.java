@@ -14,6 +14,7 @@ import java.math.BigDecimal;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
 @Table(name="contract")
 public class BountyContract implements Serializable {
 
@@ -31,14 +32,14 @@ public class BountyContract implements Serializable {
     private BigDecimal reward;
 
     @OneToOne
-    @Column(name="outlaw")
+    @JoinColumn(name="outlaw")
     private Outlaw outlaw;
 
     @Column(name="outlaw_description")
     private String outlawDescription;
 
     @OneToOne
-    @Column(name="last_place")
+    @JoinColumn(name="last_place")
     private Town lastPlace;
 
 }

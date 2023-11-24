@@ -40,13 +40,14 @@ public class Person extends RepresentationModel<Person> implements Serializable 
     @Column(name = "name", nullable = false, length = 80)
     private String name;
 
-    @Column(name = "town_origin", nullable = false, length = 80)
+    @ManyToOne
+    @JoinColumn(name = "town_id")
     private Town origin;
 
     @Column(name="money")
     private BigDecimal money;
 
-    @ManyToOne
+    @OneToMany(mappedBy = "person")
     private List<Equipment> equipments;
 
     private boolean alive;
