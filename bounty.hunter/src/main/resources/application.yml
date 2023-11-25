@@ -3,7 +3,7 @@ cors:
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/bounty?useTimezone=true&serverTimezone=UTC
+    url: jdbc:postgresql://localhost:3080/bounty?useTimezone=true&serverTimezone=UTC
     username: postgres
     password: postgres
   jpa:
