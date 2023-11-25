@@ -3,6 +3,7 @@ package wild.west.bounty.hunter.service;
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import wild.west.bounty.hunter.exceptions.NotOutlawException;
 import wild.west.bounty.hunter.exceptions.ResourceNotFoundException;
@@ -51,10 +52,10 @@ public class BountyContractService {
         return repository.save(contract);
     }
 
-    public Page<BountyContract> findContractByOutlaw(String outlawName){
+    public Page<BountyContract> findContractByOutlaw(String outlawName, Pageable page){
         log.info(String.format("Searching a contract by the the name of: %s", outlawName));
 
-        Page<BountyContract> contracts = repository.findBountyContractsByOutlaw(outlawName);
+        Page<BountyContract> contracts = repository.findBountyContractsByOutlaw(outlawName, page);
 
         if (contracts.isEmpty()){
             throw new NoSuchElementException();
