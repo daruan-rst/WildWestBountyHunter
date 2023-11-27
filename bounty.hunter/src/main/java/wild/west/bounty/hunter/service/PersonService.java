@@ -71,8 +71,8 @@ public class PersonService {
 
     public Person createPerson(Person person){
         log.info("Creating person");
-        person = personRepository.save(person);
         person.setAlive(true);
+        person = personRepository.save(person);
         person.add(linkTo(methodOn(PersonController.class).createPerson(person)).withSelfRel());
         return person;
     }
