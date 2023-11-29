@@ -32,5 +32,14 @@ public class SaloonService {
         return saloon;
     }
 
+    public Saloon deleteSaloon(long id){
+        log.info("Deleting a saloon by id");
+        Saloon saloon = this.findById(id);
+        saloon.removeLinks();
+        saloon.add(linkTo(methodOn(SaloonController.class).deleteSaloon(id)).withSelfRel());
+        repository.delete(saloon);
+        return saloon;
+    }
+
 
 }
