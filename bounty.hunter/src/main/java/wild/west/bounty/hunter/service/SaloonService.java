@@ -6,7 +6,9 @@ import org.springframework.stereotype.Service;
 import wild.west.bounty.hunter.controller.SaloonController;
 import wild.west.bounty.hunter.exceptions.ResourceNotFoundException;
 import wild.west.bounty.hunter.model.Saloon;
+import wild.west.bounty.hunter.model.Town;
 import wild.west.bounty.hunter.repositories.SaloonRepository;
+import wild.west.bounty.hunter.repositories.TownRepository;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -17,6 +19,8 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 public class SaloonService {
 
     private final SaloonRepository repository;
+
+    private final TownRepository townRepository;
 
 
     public Saloon findById(Long id){
@@ -29,6 +33,14 @@ public class SaloonService {
         log.info("Creating a saloon");
         saloon = repository.save(saloon);
         saloon.add(linkTo(methodOn(SaloonController.class).createASaloon(saloon)).withSelfRel());
+        return saloon;
+    }
+
+    public Saloon addToTown(long saloonId, long townId){
+        Saloon saloon = this.findById(saloonId);
+        Town town = townRepository.findById(townId).orElseThrow(() -> new ResourceNotFoundException("No town found for this id"));
+        saloon.setTown(town);
+        town.getSaloons().add(saloon);
         return saloon;
     }
 
