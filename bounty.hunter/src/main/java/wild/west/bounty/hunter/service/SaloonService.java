@@ -36,6 +36,14 @@ public class SaloonService {
         return saloon;
     }
 
+    public Saloon udpateSaloon(long id, Saloon newSaloon){
+        Saloon saloon = this.findById(id);
+        saloon.setSaloonName(newSaloon.getSaloonName());
+        saloon.setTown(newSaloon.getTown());
+        repository.save(saloon);
+        return saloon;
+    }
+
     public Saloon addToTown(long saloonId, long townId){
         Saloon saloon = this.findById(saloonId);
         Town town = townRepository.findById(townId).orElseThrow(() -> new ResourceNotFoundException("No town found for this id"));
