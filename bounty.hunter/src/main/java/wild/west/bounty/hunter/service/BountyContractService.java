@@ -5,18 +5,19 @@ import lombok.extern.java.Log;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import wild.west.bounty.hunter.controller.BountyContractController;
 import wild.west.bounty.hunter.exceptions.NotOutlawException;
 import wild.west.bounty.hunter.exceptions.ResourceNotFoundException;
-import wild.west.bounty.hunter.model.BountyContract;
-import wild.west.bounty.hunter.model.Outlaw;
-import wild.west.bounty.hunter.model.Person;
-import wild.west.bounty.hunter.model.Town;
+import wild.west.bounty.hunter.model.*;
 import wild.west.bounty.hunter.repositories.BountyContractRepository;
 import wild.west.bounty.hunter.repositories.PersonRepository;
 import wild.west.bounty.hunter.repositories.TownRepository;
 import wild.west.bounty.hunter.request.BountyContractRequest;
 
 import java.util.NoSuchElementException;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Log
 @AllArgsConstructor
@@ -62,5 +63,28 @@ public class BountyContractService {
         }
         return contracts;
         }
+
+    public BountyContract udpateBountyContract(long id, BountyContract newBountyContract){
+        log.info("Updating a BountyContract");
+        BountyContract bountyContract = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No BountyContract found for this id"));
+//        bountyContract.setBountyContractName(newBountyContract.getBountyContractName());
+        bountyContract.setLastPlace(newBountyContract.getLastPlace());
+        bountyContract.setPosterName(newBountyContract.getPosterName());
+        bountyContract.setReward(newBountyContract.getReward());
+        bountyContract.setOutlaw(newBountyContract.getOutlaw());
+        bountyContract.setOutlawDescription(newBountyContract.getOutlawDescription());
+        repository.save(bountyContract);
+        return bountyContract;
+    }
+    
+
+    public BountyContract deleteBountyContract(long id){
+        log.info("Deleting a BountyContract by id");
+        BountyContract bountyContract = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No BountyContract found for this id"));
+//        bountyContract.removeLinks();
+//        bountyContract.add(linkTo(methodOn(BountyContractController.class).deleteBountyContract(id)).withSelfRel());
+        repository.delete(bountyContract);
+        return bountyContract;
+    }
 
 }
