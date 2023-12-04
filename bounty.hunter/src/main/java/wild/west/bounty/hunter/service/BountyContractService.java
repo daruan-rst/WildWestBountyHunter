@@ -64,15 +64,13 @@ public class BountyContractService {
         return contracts;
         }
 
-    public BountyContract udpateBountyContract(long id, BountyContract newBountyContract){
+    public BountyContract udpateBountyContract(long id, BountyContractRequest newBountyContract){
         log.info("Updating a BountyContract");
         BountyContract bountyContract = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No BountyContract found for this id"));
-//        bountyContract.setBountyContractName(newBountyContract.getBountyContractName());
-        bountyContract.setLastPlace(newBountyContract.getLastPlace());
-        bountyContract.setPosterName(newBountyContract.getPosterName());
-        bountyContract.setReward(newBountyContract.getReward());
-        bountyContract.setOutlaw(newBountyContract.getOutlaw());
-        bountyContract.setOutlawDescription(newBountyContract.getOutlawDescription());
+        Town lastTown = townRepository.findByTownName(newBountyContract.lastTown()).orElseThrow(() -> new ResourceNotFoundException("No BountyContract found for this id"));
+        bountyContract.setLastPlace(lastTown);
+        bountyContract.setReward(newBountyContract.reward());
+        bountyContract.setOutlawDescription(newBountyContract.description());
         repository.save(bountyContract);
         return bountyContract;
     }

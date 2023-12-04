@@ -73,4 +73,38 @@ public class BountyContractController {
 
         return service.findContractByOutlaw(outlawName, pageable);
     }
+
+    @PutMapping("/{id}")
+    @Operation(summary = "Updates a Bounty Contract", description = "Atualiza um cartaz de procurado",
+            tags = {"Bounty Contract"},
+            responses = {
+                    @ApiResponse(description = "Sucess", responseCode = "200",
+                            content =
+                            @Content(schema = @Schema(implementation = BountyHunter.class))),
+                    @ApiResponse(description = "BadRequest", responseCode = "400", content = @Content),
+                    @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
+                    @ApiResponse(description = "Not found", responseCode = "404", content = @Content),
+                    @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
+            })
+    public BountyContract updateContract(
+            @PathVariable Long id,
+            @RequestBody BountyContractRequest request){
+        return service.udpateBountyContract(id, request);
+    }
+
+    @DeleteMapping("/{id}")
+    @Operation(summary = "Deletes a Bounty Contract", description = "Apaga um cartaz de procurado",
+            tags = {"Bounty Contract"},
+            responses = {
+                    @ApiResponse(description = "Sucess", responseCode = "200",
+                            content =
+                            @Content(schema = @Schema(implementation = BountyHunter.class))),
+                    @ApiResponse(description = "BadRequest", responseCode = "400", content = @Content),
+                    @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
+                    @ApiResponse(description = "Not found", responseCode = "404", content = @Content),
+                    @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
+            })
+    public BountyContract deleteContract(@PathVariable Long id){
+        return service.deleteBountyContract(id);
+    }
 }
