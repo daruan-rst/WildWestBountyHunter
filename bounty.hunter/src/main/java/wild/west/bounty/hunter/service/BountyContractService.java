@@ -49,6 +49,8 @@ public class BountyContractService {
         contract.setReward(contractRequest.reward());
         contract.setLastPlace(lastTown);
         contract.setPosterName("WANTED! DEAD OR ALIVE");
+        contract.add(linkTo(methodOn(BountyContractController.class).createAContract(contractRequest)).withSelfRel());
+
 
         return repository.save(contract);
     }
@@ -60,6 +62,9 @@ public class BountyContractService {
 
         if (contracts.isEmpty()){
             throw new NoSuchElementException();
+        } else {
+            contracts.forEach(
+                    c -> c.add(linkTo(methodOn(BountyContractController.class).searchBountyContract(outlawName, page.getPageNumber(), page.getPageSize(), page.getSort().toString())).withSelfRel()));
         }
         return contracts;
         }
@@ -71,6 +76,7 @@ public class BountyContractService {
         bountyContract.setLastPlace(lastTown);
         bountyContract.setReward(newBountyContract.reward());
         bountyContract.setOutlawDescription(newBountyContract.description());
+        bountyContract.add(linkTo(methodOn(BountyContractController.class).updateContract(id, newBountyContract)).withSelfRel());
         repository.save(bountyContract);
         return bountyContract;
     }
@@ -79,8 +85,8 @@ public class BountyContractService {
     public BountyContract deleteBountyContract(long id){
         log.info("Deleting a BountyContract by id");
         BountyContract bountyContract = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No BountyContract found for this id"));
-//        bountyContract.removeLinks();
-//        bountyContract.add(linkTo(methodOn(BountyContractController.class).deleteBountyContract(id)).withSelfRel());
+        bountyContract.removeLinks();
+        bountyContract.add(linkTo(methodOn(BountyContractController.class).deleteContract(id)).withSelfRel());
         repository.delete(bountyContract);
         return bountyContract;
     }

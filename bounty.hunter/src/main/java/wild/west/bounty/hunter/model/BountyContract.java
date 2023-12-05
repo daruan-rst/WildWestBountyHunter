@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.hateoas.RepresentationModel;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -16,7 +17,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @Entity
 @Table(name="contract")
-public class BountyContract implements Serializable {
+public class BountyContract extends RepresentationModel<BountyContract> implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
