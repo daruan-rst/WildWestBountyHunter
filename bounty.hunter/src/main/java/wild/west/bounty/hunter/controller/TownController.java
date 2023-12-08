@@ -8,7 +8,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import wild.west.bounty.hunter.model.Person;
 import wild.west.bounty.hunter.model.Town;
 import wild.west.bounty.hunter.service.TownService;
 
@@ -27,7 +26,7 @@ public class TownController {
                             content = {
                                     @Content(
                                             mediaType = "application/json",
-                                            array = @ArraySchema(schema = @Schema(implementation = Person.class))
+                                            array = @ArraySchema(schema = @Schema(implementation = Town.class))
                                     )
                             }),
                     @ApiResponse(description = "BadRequest", responseCode = "400", content = @Content),
@@ -44,7 +43,7 @@ public class TownController {
             responses = {
                     @ApiResponse(description = "Sucess", responseCode = "200",
                             content =
-                            @Content(schema = @Schema(implementation = Person.class))),
+                            @Content(schema = @Schema(implementation = Town.class))),
                     @ApiResponse(description = "BadRequest", responseCode = "400", content = @Content),
                     @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
                     @ApiResponse(description = "Not found", responseCode = "404", content = @Content),
@@ -60,7 +59,7 @@ public class TownController {
             responses = {
                     @ApiResponse(description = "Sucess", responseCode = "200",
                             content =
-                            @Content(schema = @Schema(implementation = Person.class))),
+                            @Content(schema = @Schema(implementation = Town.class))),
                     @ApiResponse(description = "BadRequest", responseCode = "400", content = @Content),
                     @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
                     @ApiResponse(description = "Not found", responseCode = "404", content = @Content),
@@ -76,7 +75,7 @@ public class TownController {
             tags = {"Town"},
             responses = {
                     @ApiResponse(description = "Sucess", responseCode = "200",
-                            content = @Content(schema = @Schema(implementation = Person.class))),
+                            content = @Content(schema = @Schema(implementation = Town.class))),
                     @ApiResponse(description = "BadRequest", responseCode = "400", content = @Content),
                     @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
                     @ApiResponse(description = "Not found", responseCode = "404", content = @Content),
