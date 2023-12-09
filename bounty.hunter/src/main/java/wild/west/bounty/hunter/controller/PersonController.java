@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import wild.west.bounty.hunter.model.Equipment;
 import wild.west.bounty.hunter.model.Person;
+import wild.west.bounty.hunter.response.MurderResponse;
 import wild.west.bounty.hunter.service.PersonService;
 
 @RestController
@@ -132,7 +133,7 @@ public class PersonController {
     }
 
     @PutMapping(value = "/{id}")
-    @Operation(summary = "Updates a bounty hunter", description = "Updates a bounty hunter",
+    @Operation(summary = "Updates a person", description = "Updates a person",
             tags = {"Person"},
             responses = {
                     @ApiResponse(description = "Sucess", responseCode = "200",
@@ -149,8 +150,27 @@ public class PersonController {
         return personService.updatePerson(person, id);
     }
 
+    @PutMapping(value = "/{id}")
+    @Operation(summary = "Lets a person kill another", description = "Effectively, changes alive of a victim to false. " +
+            "The killer should be cast to an Outlaw",
+            tags = {"Person"},
+            responses = {
+                    @ApiResponse(description = "Sucess", responseCode = "200",
+                            content = @Content(schema = @Schema(implementation = Person.class))),
+                    @ApiResponse(description = "BadRequest", responseCode = "400", content = @Content),
+                    @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
+                    @ApiResponse(description = "Not found", responseCode = "404", content = @Content),
+                    @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
+            })
+    public MurderResponse killSomebody(
+            @PathVariable Long killerId,
+            @RequestBody Long victimId
+    ){
+        return personService.killSomebody(killerId, victimId);
+    }
+
     @PatchMapping(value = "/{id}")
-    @Operation(summary = "Updates a bounty hunter", description = "Updates a bounty hunter",
+    @Operation(summary = "Updates a person", description = "Updates a person",
             tags = {"Person"},
             responses = {
                     @ApiResponse(description = "Sucess", responseCode = "200",
@@ -168,7 +188,7 @@ public class PersonController {
     }
 
     @DeleteMapping(value = "/{id}")
-    @Operation(summary = "Deletes a bounty hunter", description = "Deletes a bounty hunter",
+    @Operation(summary = "Deletes a person", description = "Deletes a person",
             tags = {"Person"},
             responses = {
                     @ApiResponse(description = "Sucess", responseCode = "200",
