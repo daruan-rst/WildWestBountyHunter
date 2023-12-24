@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import wild.west.bounty.hunter.controller.EquipmentController;
 import wild.west.bounty.hunter.exceptions.ResourceNotFoundException;
 import wild.west.bounty.hunter.model.Equipment;
-import wild.west.bounty.hunter.model.Town;
 import wild.west.bounty.hunter.repositories.EquipmentRepository;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
@@ -22,21 +21,21 @@ public class EquipmentService {
     public Equipment findById(Long id){
         log.info("Finding a equipment by id");
         Equipment equipment = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No equipment found for this id"));
-//        equipment.add(linkTo(methodOn(EquipmentController.class).findEquipmentById(equipment.getId())).withSelfRel());
+        equipment.add(linkTo(methodOn(EquipmentController.class).findEquipmentById(equipment.getId())).withSelfRel());
         return equipment;
     }
     public Equipment createEquipment(Equipment equipment){
         log.info("Creating a equipment");
         equipment = repository.save(equipment);
-//        equipment.add(linkTo(methodOn(EquipmentController.class).createAEquipment(equipment)).withSelfRel());
+        equipment.add(linkTo(methodOn(EquipmentController.class).createAEquipment(equipment)).withSelfRel());
         return equipment;
     }
 
     public Equipment deleteEquipment(long id){
         log.info("Deleting a equipment by id");
         Equipment equipment = this.findById(id);
-//        equipment.removeLinks();
-//        equipment.add(linkTo(methodOn(EquipmentController.class).deleteEquipment(id)).withSelfRel());
+        equipment.removeLinks();
+        equipment.add(linkTo(methodOn(EquipmentController.class).deleteEquipment(id)).withSelfRel());
         repository.delete(equipment);
         return equipment;
     }

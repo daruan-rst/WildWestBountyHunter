@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.hateoas.RepresentationModel;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -16,7 +17,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @Table(name="equipment")
 @Entity
-public class Equipment implements Serializable {
+public class Equipment extends RepresentationModel<Equipment> implements   Serializable {
 
     @Serial
     private final static long serialVersionUID = 1L;
