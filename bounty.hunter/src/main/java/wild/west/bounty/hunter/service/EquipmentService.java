@@ -31,6 +31,17 @@ public class EquipmentService {
         return equipment;
     }
 
+    public Equipment updateEquipment(long id, Equipment newEquipment){
+        log.info("Updating an equipment");
+        Equipment equipment = findById(id);
+        equipment.removeLinks();
+        equipment.setPerson(newEquipment.getPerson());
+        equipment.setValue(newEquipment.getValue());
+        equipment = repository.save(equipment);
+        equipment.add(linkTo(methodOn(EquipmentController.class).updateAnEquipment(id, equipment)).withSelfRel());
+        return equipment;
+    }
+
     public Equipment deleteEquipment(long id){
         log.info("Deleting a equipment by id");
         Equipment equipment = this.findById(id);
