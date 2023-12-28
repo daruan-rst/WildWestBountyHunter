@@ -71,6 +71,23 @@ public class EquipmentController {
 
     }
 
+    @PatchMapping("equipment/{equipmentId}/person/{personId}")
+    @Operation(summary = "Adds an Equipment to a person", description = "Equipment",
+            tags = {"Equipment"},
+            responses = {
+                    @ApiResponse(description = "Sucess", responseCode = "200",
+                            content =
+                            @Content(schema = @Schema(implementation = Equipment.class))),
+                    @ApiResponse(description = "BadRequest", responseCode = "400", content = @Content),
+                    @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
+                    @ApiResponse(description = "Not found", responseCode = "404", content = @Content),
+                    @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
+            })
+    public Equipment addsAnEquipmentToPerson(@PathVariable Long equipmentId,
+                                             @PathVariable Long personId){
+        return service.addingAnEquipmentToPerson(personId, equipmentId);
+    }
+
     @DeleteMapping
     @Operation(summary = "Deletes an Equipment", description = "Deletes a Equipment",
             tags = {"Equipment"},
