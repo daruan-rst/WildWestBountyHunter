@@ -18,7 +18,7 @@ public class EquipmentController {
 
     private EquipmentService service;
 
-    @GetMapping("/{id}")
+    @GetMapping(value =  "/{id}")
     @Operation(summary = "Retrieves an Equipment by its id", description = "Com este endpoint, podemos retornar um Equipment com o seu Id",
             tags = {"Equipment"},
             responses = {
@@ -34,7 +34,7 @@ public class EquipmentController {
                     @ApiResponse(description = "Not found", responseCode = "404", content = @Content),
                     @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
             })
-    public Equipment findEquipmentById(@PathVariable Long id){
+    public Equipment findEquipmentById(@PathVariable(value = "equipmentId") Long id){
         return service.findById(id);
     }
     @PostMapping
@@ -53,7 +53,7 @@ public class EquipmentController {
         return service.createEquipment(equipment);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping(value = "/{id}")
     @Operation(summary = "Updates an Equipment", description = "Equipment",
             tags = {"Equipment"},
             responses = {
@@ -88,7 +88,7 @@ public class EquipmentController {
         return service.addingAnEquipmentToPerson(personId, equipmentId);
     }
 
-    @DeleteMapping
+    @DeleteMapping(value = "/{id}")
     @Operation(summary = "Deletes an Equipment", description = "Deletes a Equipment",
             tags = {"Equipment"},
             responses = {
@@ -99,7 +99,7 @@ public class EquipmentController {
                     @ApiResponse(description = "Not found", responseCode = "404", content = @Content),
                     @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
             })
-    public Equipment deleteEquipment(Long id) {
+    public Equipment deleteEquipment(@PathVariable Long id) {
         return service.deleteEquipment(id);
     }
 }

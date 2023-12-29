@@ -150,7 +150,7 @@ public class PersonController {
         return personService.updatePerson(person, id);
     }
 
-    @PutMapping(value = "/{id}")
+    @PutMapping(value = "kill/{killerId}/{victimId}")
     @Operation(summary = "Lets a person kill another", description = "Effectively, changes alive of a victim to false. " +
             "The killer should be cast to an Outlaw",
             tags = {"Person"},
@@ -164,7 +164,7 @@ public class PersonController {
             })
     public MurderResponse killSomebody(
             @PathVariable Long killerId,
-            @RequestBody Long victimId
+            @PathVariable Long victimId
     ){
         return personService.killSomebody(killerId, victimId);
     }
