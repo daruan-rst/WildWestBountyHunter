@@ -12,7 +12,8 @@ import wild.west.bounty.hunter.model.Equipment;
 import wild.west.bounty.hunter.service.EquipmentService;
 
 @AllArgsConstructor
-@RestController("/api/equipment/v1")
+@RestController
+@RequestMapping("/api/equipment/v1")
 @Tag(name = "Equipment", description = "Endpoints para a entidade Equipment")
 public class EquipmentController {
 

@@ -12,7 +12,8 @@ import wild.west.bounty.hunter.model.Saloon;
 import wild.west.bounty.hunter.service.SaloonService;
 
 @AllArgsConstructor
-@RestController("/api/saloon/v1")
+@RestController
+@RequestMapping("/api/saloon/v1")
 @Tag(name = "Saloon", description = "Endpoints para a entidade Saloon")
 public class SaloonController {
 
