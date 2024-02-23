@@ -14,8 +14,8 @@ public class MurderResponse {
     public String toString(MurderResponse response) {
         String finalMessage = response.killer.getName().concat (
                 killer instanceof Outlaw ?
-                " has it's bounty has risen" :
-                  " will be currently be considered an outlaw and a bounty for it's head was placed");
+                " had it's bounty risen" :
+                  " will be considered  an outlaw from now on. A bounty for it's head was placed");
         return String.format("%s killed %s using an %s. %s", killer, victim, killer.getEquipments().get(0),  finalMessage);
     }
 }
