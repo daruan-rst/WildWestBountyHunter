@@ -12,7 +12,8 @@ import wild.west.bounty.hunter.model.Town;
 import wild.west.bounty.hunter.service.TownService;
 
 @AllArgsConstructor
-@RestController("/api/town/v1")
+@RestController
+@RequestMapping("/api/town/v1/")
 @Tag(name = "Town", description = "Endpoints para a entidade Town")
 public class TownController {
 
