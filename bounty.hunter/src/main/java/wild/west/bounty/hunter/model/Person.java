@@ -50,5 +50,6 @@ public class Person extends RepresentationModel<Person> implements Serializable 
     @OneToMany(mappedBy = "person")
     private List<Equipment> equipments;
 
+    @Column(name="alive")
     private boolean alive;
 }
