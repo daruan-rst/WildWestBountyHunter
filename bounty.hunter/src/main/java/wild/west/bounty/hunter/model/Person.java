@@ -35,7 +35,7 @@ public class Person extends RepresentationModel<Person> implements Serializable 
 
     @Column(name = "_OBJECT_TYPE", insertable = false, updatable = false)
     @JsonIgnore
-    private String objectType;
+    private String objectType = "PERSON";
 
     @Column(name = "name", nullable = false, length = 80)
     private String name;
