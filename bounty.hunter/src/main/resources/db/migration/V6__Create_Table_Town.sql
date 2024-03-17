@@ -1,4 +1,4 @@
 CREATE TABLE IF NOT EXISTS town (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(80) NOT NULL
+     "id" SERIAL PRIMARY KEY,
+    "name" varchar(80) NOT NULL
 );
