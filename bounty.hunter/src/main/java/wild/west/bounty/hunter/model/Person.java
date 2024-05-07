@@ -33,7 +33,7 @@ public class Person extends RepresentationModel<Person> implements Serializable 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "_OBJECT_TYPE", insertable = false, updatable = false)
+    @Column(name = "_object_type", insertable = false, updatable = false)
     @JsonIgnore
     private String objectType = "PERSON";
 

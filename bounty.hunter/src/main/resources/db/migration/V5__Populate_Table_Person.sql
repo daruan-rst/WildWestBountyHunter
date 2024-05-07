@@ -1,5 +1,5 @@
 
-INSERT INTO "person" ("_OBJECT_TYPE", "name", "town_id", "money", "reputation")
+INSERT INTO "person" ("_object_type", "name", "town_id", "money", "reputation")
 VALUES
     ('PERSON', 'Maynard James Keenan', 4, '500', NULL),
     ('PERSON', 'Adam Jones', 1, '1250', NULL),
