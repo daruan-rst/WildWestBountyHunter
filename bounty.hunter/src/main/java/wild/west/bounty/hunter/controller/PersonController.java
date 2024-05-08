@@ -56,7 +56,7 @@ public class PersonController {
         var sortDirection = sort.equalsIgnoreCase("DESC") ? Sort.Direction.DESC :
                 Sort.Direction.ASC;
 
-        Pageable pageable = PageRequest.of(page, size, Sort.by(sortDirection, "cowboyName"));
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sortDirection, "name"));
 
         return ResponseEntity.ok(personService.findAll(pageable));
     }
@@ -83,7 +83,7 @@ public class PersonController {
         return personService.findById(id);
     }
 
-    @GetMapping(value = "/{job}")
+    @GetMapping(value = "/find-by-job/{job}")
     @Operation(summary = "Retrieves a Person by its job", description = "Com este endpoint, podemos retornar uma Person com o seu Id",
             tags = {"Person"},
             responses = {

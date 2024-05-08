@@ -52,4 +52,7 @@ public class Person extends RepresentationModel<Person> implements Serializable 
 
     @Column(name="alive")
     private boolean alive;
+
+    @Column(name="bounty_value")
+    private BigDecimal bountyValue;
 }

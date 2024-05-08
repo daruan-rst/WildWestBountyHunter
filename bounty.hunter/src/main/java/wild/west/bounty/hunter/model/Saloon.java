@@ -30,7 +30,7 @@ public class Saloon extends RepresentationModel<Saloon> implements Serializable 
     private String saloonName;
 
     @ManyToOne
-    @JoinColumn(name = "town_name", nullable = false)
+    @JoinColumn(name = "town_id", nullable = false)
     private Town town;
 
 
