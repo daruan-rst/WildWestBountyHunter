@@ -1,5 +1,6 @@
 package wild.west.bounty.hunter.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,7 +32,7 @@ public class Saloon extends RepresentationModel<Saloon> implements Serializable 
 
     @ManyToOne
     @JoinColumn(name = "town_id", nullable = false)
+    @JsonBackReference
     private Town town;
-
 
 }

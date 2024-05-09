@@ -1,5 +1,6 @@
 package wild.west.bounty.hunter.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,11 +30,8 @@ public class Town extends RepresentationModel<Town> implements Serializable {
     @Column(name = "name", nullable = false, length = 80)
     private String townName;
 
-    @Column(name = "town_name", nullable = false, length = 80)
     @OneToMany(mappedBy = "town")
+    @JsonManagedReference
     private Set<Saloon> saloons;
-
-
-
 
 }
