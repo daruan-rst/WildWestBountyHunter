@@ -4,5 +4,5 @@ import lombok.ToString;
 
 @ToString
 public enum Reputation {
-    BLOODTHIRTY, CRUEL, BENEVOLENT, MILD
+    BLOODTHIRSTY, CRUEL, BENEVOLENT, MILD
 }
