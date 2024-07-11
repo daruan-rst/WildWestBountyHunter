@@ -22,9 +22,9 @@ import java.util.List;
         @Type(value = BountyHunter.class, name = "BOUNTY_HUNTER"),
         @Type(value = Outlaw.class, name = "OUTLAW")})
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "_OBJECT_TYPE", length = 64)
+@DiscriminatorColumn(name = "_OBJECT_TYPE", discriminatorType = DiscriminatorType.STRING, length = 64)
 @Entity
-public class Person extends RepresentationModel<Person> implements Serializable {
+public abstract class Person extends RepresentationModel<Person> implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -53,6 +53,5 @@ public class Person extends RepresentationModel<Person> implements Serializable 
     @Column(name="alive")
     private boolean alive;
 
-    @Column(name="bounty_value")
-    private BigDecimal bountyValue;
+
 }

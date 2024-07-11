@@ -29,8 +29,6 @@ public class BountyHunter extends Person {
     @Serial
     private static final long serialVersionUID =  1L;
 
-    @JsonIgnore
-    public static final String OBJECT_TYPE = "BOUNTY_HUNTER";
 
     @Column(name = "reputation", nullable = false, length = 80)
     private Reputation reputation;

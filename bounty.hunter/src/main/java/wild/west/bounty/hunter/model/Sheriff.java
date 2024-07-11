@@ -22,7 +22,4 @@ public class Sheriff extends Person{
     @Serial
     private static final long serialVersionUID =  1L;
 
-    @JsonIgnore
-    public static final String OBJECT_TYPE = "SHERIFF";
-
 }

@@ -30,9 +30,6 @@ public class Outlaw extends Person implements Serializable {
     @Serial
     private static final long serialVersionUID =  1L;
 
-    @JsonIgnore
-    public static final String OBJECT_TYPE = "OUTLAW";
-
     @Column(name="bounty_value")
     private BigDecimal bountyValue;
 }
