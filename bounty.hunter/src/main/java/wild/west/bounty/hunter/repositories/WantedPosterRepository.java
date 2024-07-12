@@ -4,11 +4,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import wild.west.bounty.hunter.model.BountyContract;
+import wild.west.bounty.hunter.model.WantedPoster;
 
 @Repository
-public interface BountyContractRepository extends JpaRepository<BountyContract, Long> {
+public interface WantedPosterRepository extends JpaRepository<WantedPoster, Long> {
 
-    Page<BountyContract> findBountyContractsByOutlaw(String outlaw, Pageable page);
+    Page<WantedPoster> findBountyContractsByOutlaw(String outlaw, Pageable page);
 
 }

@@ -16,8 +16,8 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name="contract")
-public class BountyContract extends RepresentationModel<BountyContract> implements Serializable {
+@Table(name="wanted_poster")
+public class WantedPoster extends RepresentationModel<WantedPoster> implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -12,18 +12,18 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
-import wild.west.bounty.hunter.model.BountyContract;
+import wild.west.bounty.hunter.model.WantedPoster;
 import wild.west.bounty.hunter.model.BountyHunter;
-import wild.west.bounty.hunter.request.BountyContractRequest;
-import wild.west.bounty.hunter.service.BountyContractService;
+import wild.west.bounty.hunter.request.WantedPosterRequest;
+import wild.west.bounty.hunter.service.WantedPosterService;
 
 @RestController
 @RequestMapping("/api/bounty-contract/v1")
 @Tag(name = "Bounty Contract", description = "Api responsável pelo cartaz de procurado")
 @AllArgsConstructor
-public class BountyContractController {
+public class WantedPosterController {
 
-    private final BountyContractService service;
+    private final WantedPosterService service;
 
     @PostMapping
     @Operation(summary = "Creates a Bounty Contract", description = "Cria um cartaz de procurado",
@@ -37,7 +37,7 @@ public class BountyContractController {
                     @ApiResponse(description = "Not found", responseCode = "404", content = @Content),
                     @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
             })
-    public BountyContract createAContract(BountyContractRequest contractRequest){
+    public WantedPoster createAContract(WantedPosterRequest contractRequest){
         return service.createContract(contractRequest);
     }
 
@@ -60,7 +60,7 @@ public class BountyContractController {
                     @ApiResponse(description = "Not found", responseCode = "404", content = @Content),
                     @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content),
             })
-    public Page<BountyContract> searchBountyContract(
+    public Page<WantedPoster> searchBountyContract(
             @PathVariable String outlawName,
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "10") int size,
@@ -86,9 +86,9 @@ public class BountyContractController {
                     @ApiResponse(description = "Not found", responseCode = "404", content = @Content),
                     @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
             })
-    public BountyContract updateContract(
+    public WantedPoster updateContract(
             @PathVariable Long id,
-            @RequestBody BountyContractRequest request){
+            @RequestBody WantedPosterRequest request){
         return service.udpateBountyContract(id, request);
     }
 
@@ -104,7 +104,7 @@ public class BountyContractController {
                     @ApiResponse(description = "Not found", responseCode = "404", content = @Content),
                     @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
             })
-    public BountyContract deleteContract(@PathVariable Long id){
+    public WantedPoster deleteContract(@PathVariable Long id){
         return service.deleteBountyContract(id);
     }
 }
