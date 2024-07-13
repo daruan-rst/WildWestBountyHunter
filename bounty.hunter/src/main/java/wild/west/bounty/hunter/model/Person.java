@@ -20,9 +20,10 @@ import java.util.List;
 @JsonTypeName("PERSON")
 @JsonSubTypes({@Type(value = Sheriff.class, name = "SHERIFF"),
         @Type(value = BountyHunter.class, name = "BOUNTY_HUNTER"),
-        @Type(value = Outlaw.class, name = "OUTLAW")})
+        @Type(value = Outlaw.class, name = "OUTLAW"),
+        @Type(value = Outlaw.class, name = "CITIZEN")})
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "_OBJECT_TYPE", discriminatorType = DiscriminatorType.STRING, length = 64)
+@DiscriminatorColumn(name = "_PERSON_TYPE", discriminatorType = DiscriminatorType.STRING, length = 64)
 @Entity
 public abstract class Person extends RepresentationModel<Person> implements Serializable {
 
@@ -32,10 +33,6 @@ public abstract class Person extends RepresentationModel<Person> implements Seri
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(name = "_object_type", insertable = false, updatable = false)
-    @JsonIgnore
-    private String objectType = "PERSON";
 
     @Column(name = "name", nullable = false, length = 80)
     private String name;

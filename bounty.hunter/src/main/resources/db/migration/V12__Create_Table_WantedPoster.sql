@@ -5,6 +5,6 @@ CREATE TABLE IF NOT EXISTS wanted_poster (
     "outlaw_description" varchar(100),
     "poster_name" varchar(100),
     "last_place" BIGINT,
-    FOREIGN KEY (last_place) REFERENCES town(id)
+    FOREIGN KEY (last_place) REFERENCES town(id),
     FOREIGN KEY (outlaw) REFERENCES person(id)
 );
