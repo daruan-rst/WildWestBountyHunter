@@ -1,5 +1,5 @@
 
-INSERT INTO "person" ("_PERSON_TYPE", "name", "town_id", "money", "reputation", "alive")
+INSERT INTO "person" ("_person_type", "name", "town_id", "money", "reputation", "alive")
 VALUES
     ('SHERIFF', 'Carl Sagan', 1, '1000', NULL,true),
     ('SHERIFF', 'Pete Townshend', 2, '2050', NULL,true),

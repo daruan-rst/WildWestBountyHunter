@@ -1,5 +1,5 @@
 
-INSERT INTO "person" ("_PERSON_TYPE", "name", "town_id", "money", "reputation", "alive")
+INSERT INTO "person" ("_person_type", "name", "town_id", "money", "reputation", "alive")
 VALUES
     ('CITIZEN', 'Maynard James Keenan', 4, '500', NULL,true),
     ('CITIZEN', 'Adam Jones', 1, '1250', NULL,true),

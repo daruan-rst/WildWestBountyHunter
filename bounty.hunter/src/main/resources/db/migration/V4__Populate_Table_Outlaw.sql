@@ -1,5 +1,5 @@
 
-INSERT INTO "person" ("_PERSON_TYPE", "name", "town_id", "money", "reputation", "alive", "bounty_value")
+INSERT INTO "person" ("_person_type", "name", "town_id", "money", "reputation", "alive", "bounty_value")
 VALUES
     ('OUTLAW', 'Maynard James Keenan', 4, '500', NULL,true,1000),
     ('OUTLAW', 'Adam Jones', 1, '1250', NULL,true, 5500),

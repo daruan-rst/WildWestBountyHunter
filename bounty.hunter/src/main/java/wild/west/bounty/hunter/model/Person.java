@@ -23,12 +23,16 @@ import java.util.List;
         @Type(value = Outlaw.class, name = "OUTLAW"),
         @Type(value = Outlaw.class, name = "CITIZEN")})
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "_PERSON_TYPE", discriminatorType = DiscriminatorType.STRING, length = 64)
+@DiscriminatorColumn(name = "_person_type", discriminatorType = DiscriminatorType.STRING, length = 64)
 @Entity
 public abstract class Person extends RepresentationModel<Person> implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
+
+    @Column(name = "_person_type", insertable = false, updatable = false)
+    @JsonIgnore
+    private String objectType;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
