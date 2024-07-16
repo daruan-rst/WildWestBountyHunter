@@ -10,10 +10,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serial;
-@Getter
-@Setter
-@JsonIgnoreProperties(ignoreUnknown = true)
-@JsonTypeInfo(use = com.fasterxml.jackson.annotation.JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "objectType", visible = true)
+
 @JsonTypeName("SHERIFF")
 @DiscriminatorValue("SHERIFF")
 @Entity

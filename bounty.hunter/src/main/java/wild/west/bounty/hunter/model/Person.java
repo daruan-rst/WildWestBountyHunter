@@ -16,7 +16,7 @@ import java.util.List;
 @Getter
 @Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
-@JsonTypeInfo(use = com.fasterxml.jackson.annotation.JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "objectType", visible = true)
+@JsonTypeInfo(use = com.fasterxml.jackson.annotation.JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "personType", visible = true)
 @JsonTypeName("PERSON")
 @JsonSubTypes({@Type(value = Sheriff.class, name = "SHERIFF"),
         @Type(value = BountyHunter.class, name = "BOUNTY_HUNTER"),

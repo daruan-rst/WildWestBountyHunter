@@ -21,7 +21,6 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
-@JsonTypeInfo(use = com.fasterxml.jackson.annotation.JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "objectType", visible = true)
 @JsonTypeName("OUTLAW")
 @DiscriminatorValue("OUTLAW")
 @Entity
