@@ -35,7 +35,7 @@ public class EquipmentController {
                     @ApiResponse(description = "Not found", responseCode = "404", content = @Content),
                     @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
             })
-    public Equipment findEquipmentById(@PathVariable(value = "equipmentId") Long id){
+    public Equipment findEquipmentById(@PathVariable(value = "id") Long id){
         return service.findById(id);
     }
     @PostMapping

@@ -29,6 +29,9 @@ public class Equipment extends RepresentationModel<Equipment> implements   Seria
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "equipment_name")
+    private String equipmentName;
+
     @ManyToOne
     @JoinColumn(name="person_id")
     @JsonBackReference
