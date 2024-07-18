@@ -9,6 +9,6 @@ import wild.west.bounty.hunter.model.WantedPoster;
 @Repository
 public interface WantedPosterRepository extends JpaRepository<WantedPoster, Long> {
 
-    Page<WantedPoster> findBountyContractsByOutlaw(String outlaw, Pageable page);
+    Page<WantedPoster> findWantedPosterByOutlaw(String outlaw, Pageable page);
 
 }

@@ -30,63 +30,63 @@ public class WantedPosterService {
 
     private final TownRepository townRepository;
 
-    public WantedPoster createContract(WantedPosterRequest contractRequest){
-        Town lastTown  = townRepository.findByTownName(contractRequest.lastTown())
+    public WantedPoster createWantedPoster(WantedPosterRequest wantedPosterRequest){
+        Town lastTown  = townRepository.findByTownName(wantedPosterRequest.lastTown())
                 .orElseThrow(()->new ResourceNotFoundException(String.format("Could not find a town by the name of: %s",
-                                        contractRequest.lastTown())));
+                                        wantedPosterRequest.lastTown())));
 
-        Person person = personRepository.findByNameAndObjectType(contractRequest.outlawName(), "OUTLAW")
+        Person person = personRepository.findByNameAndObjectType(wantedPosterRequest.outlawName(), "OUTLAW")
                 .orElseThrow(()->new ResourceNotFoundException(String.format("Could not find a person by the name of: %s",
-                        contractRequest.outlawName())));
+                        wantedPosterRequest.outlawName())));
 
         if (!(person instanceof Outlaw)){
             throw new NotOutlawException(person);
         }
 
-        WantedPoster contract = new WantedPoster();
-        contract.setOutlaw((Outlaw) person);
-        contract.setOutlawDescription(contractRequest.description());
-        contract.setReward(contractRequest.reward());
-        contract.setLastPlace(lastTown);
-        contract.setPosterName("WANTED! DEAD OR ALIVE");
-        contract.add(linkTo(methodOn(WantedPosterController.class).createAContract(contractRequest)).withSelfRel());
+        WantedPoster wantedPoster = new WantedPoster();
+        wantedPoster.setOutlaw((Outlaw) person);
+        wantedPoster.setOutlawDescription(wantedPosterRequest.description());
+        wantedPoster.setReward(wantedPosterRequest.reward());
+        wantedPoster.setLastPlace(lastTown);
+        wantedPoster.setPosterName("WANTED! DEAD OR ALIVE");
+        wantedPoster.add(linkTo(methodOn(WantedPosterController.class).createAWantedPoster(wantedPosterRequest)).withSelfRel());
 
 
-        return repository.save(contract);
+        return repository.save(wantedPoster);
     }
 
-    public Page<WantedPoster> findContractByOutlaw(String outlawName, Pageable page){
-        log.info(String.format("Searching a contract by the the name of: %s", outlawName));
+    public Page<WantedPoster> findWantedPosterByOutlaw(String outlawName, Pageable page){
+        log.info(String.format("Searching a wantedPoster by the the name of: %s", outlawName));
 
-        Page<WantedPoster> contracts = repository.findBountyContractsByOutlaw(outlawName, page);
+        Page<WantedPoster> wantedPosters = repository.findWantedPosterByOutlaw(outlawName, page);
 
-        if (contracts.isEmpty()){
+        if (wantedPosters.isEmpty()){
             throw new NoSuchElementException();
         } else {
-            contracts.forEach(
-                    c -> c.add(linkTo(methodOn(WantedPosterController.class).searchBountyContract(outlawName, page.getPageNumber(), page.getPageSize(), page.getSort().toString())).withSelfRel()));
+            wantedPosters.forEach(
+                    c -> c.add(linkTo(methodOn(WantedPosterController.class).searchBountyWantedPoster(outlawName, page.getPageNumber(), page.getPageSize(), page.getSort().toString())).withSelfRel()));
         }
-        return contracts;
+        return wantedPosters;
         }
 
-    public WantedPoster udpateBountyContract(long id, WantedPosterRequest newBountyContract){
-        log.info("Updating a BountyContract");
-        WantedPoster wantedPoster = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No BountyContract found for this id"));
-        Town lastTown = townRepository.findByTownName(newBountyContract.lastTown()).orElseThrow(() -> new ResourceNotFoundException("No BountyContract found for this id"));
+    public WantedPoster udpateBountyWantedPoster(long id, WantedPosterRequest newBountyWantedPoster){
+        log.info("Updating a Bounty WantedPoster");
+        WantedPoster wantedPoster = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No BountyWantedPoster found for this id"));
+        Town lastTown = townRepository.findByTownName(newBountyWantedPoster.lastTown()).orElseThrow(() -> new ResourceNotFoundException("No BountyWantedPoster found for this id"));
         wantedPoster.setLastPlace(lastTown);
-        wantedPoster.setReward(newBountyContract.reward());
-        wantedPoster.setOutlawDescription(newBountyContract.description());
-        wantedPoster.add(linkTo(methodOn(WantedPosterController.class).updateContract(id, newBountyContract)).withSelfRel());
+        wantedPoster.setReward(newBountyWantedPoster.reward());
+        wantedPoster.setOutlawDescription(newBountyWantedPoster.description());
+        wantedPoster.add(linkTo(methodOn(WantedPosterController.class).updateWantedPoster(id, newBountyWantedPoster)).withSelfRel());
         repository.save(wantedPoster);
         return wantedPoster;
     }
     
 
-    public WantedPoster deleteBountyContract(long id){
-        log.info("Deleting a BountyContract by id");
-        WantedPoster wantedPoster = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No BountyContract found for this id"));
+    public WantedPoster deleteBountyWantedPoster(long id){
+        log.info("Deleting a BountyWantedPoster by id");
+        WantedPoster wantedPoster = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No BountyWantedPoster found for this id"));
         wantedPoster.removeLinks();
-        wantedPoster.add(linkTo(methodOn(WantedPosterController.class).deleteContract(id)).withSelfRel());
+        wantedPoster.add(linkTo(methodOn(WantedPosterController.class).deleteWantedPoster(id)).withSelfRel());
         repository.delete(wantedPoster);
         return wantedPoster;
     }

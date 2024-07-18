@@ -18,16 +18,16 @@ import wild.west.bounty.hunter.request.WantedPosterRequest;
 import wild.west.bounty.hunter.service.WantedPosterService;
 
 @RestController
-@RequestMapping("/api/bounty-contract/v1")
-@Tag(name = "Bounty Contract", description = "Api responsável pelo cartaz de procurado")
+@RequestMapping("/api/wanted-poster/v1")
+@Tag(name = "Wanted Poster", description = "Api responsável pelo cartaz de procurado")
 @AllArgsConstructor
 public class WantedPosterController {
 
     private final WantedPosterService service;
 
     @PostMapping
-    @Operation(summary = "Creates a Bounty Contract", description = "Cria um cartaz de procurado",
-            tags = {"Bounty Contract"},
+    @Operation(summary = "Creates a Wanted Poster", description = "Cria um cartaz de procurado",
+            tags = {"Wanted Poster"},
             responses = {
                     @ApiResponse(description = "Sucess", responseCode = "200",
                             content =
@@ -37,8 +37,8 @@ public class WantedPosterController {
                     @ApiResponse(description = "Not found", responseCode = "404", content = @Content),
                     @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
             })
-    public WantedPoster createAContract(WantedPosterRequest contractRequest){
-        return service.createContract(contractRequest);
+    public WantedPoster createAWantedPoster(WantedPosterRequest contractRequest){
+        return service.createWantedPoster(contractRequest);
     }
 
     @GetMapping("/{outlawName}")
@@ -46,7 +46,7 @@ public class WantedPosterController {
             "\nPara o número da página, use o requestParam page" +
             "\nPara o tamanho da página, use o requestParam size" +
             "\nPara alterar a ordem dos resultados, use o requestParam sort, que pode ser \"asc\" ou \"desc\"",
-            tags = {"Bounty Contract"},
+            tags = {"Wanted Poster"},
             responses = {
                     @ApiResponse(description = "Success", responseCode = "200",
                             content = {
@@ -60,7 +60,7 @@ public class WantedPosterController {
                     @ApiResponse(description = "Not found", responseCode = "404", content = @Content),
                     @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content),
             })
-    public Page<WantedPoster> searchBountyContract(
+    public Page<WantedPoster> searchBountyWantedPoster(
             @PathVariable String outlawName,
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "10") int size,
@@ -71,12 +71,12 @@ public class WantedPosterController {
 
         Pageable pageable = PageRequest.of(page, size, Sort.by(sortDirection, "cowboyName"));
 
-        return service.findContractByOutlaw(outlawName, pageable);
+        return service.findWantedPosterByOutlaw(outlawName, pageable);
     }
 
     @PutMapping("/{id}")
-    @Operation(summary = "Updates a Bounty Contract", description = "Atualiza um cartaz de procurado",
-            tags = {"Bounty Contract"},
+    @Operation(summary = "Updates a Wanted Poster", description = "Atualiza um cartaz de procurado",
+            tags = {"Wanted Poster"},
             responses = {
                     @ApiResponse(description = "Sucess", responseCode = "200",
                             content =
@@ -86,15 +86,15 @@ public class WantedPosterController {
                     @ApiResponse(description = "Not found", responseCode = "404", content = @Content),
                     @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
             })
-    public WantedPoster updateContract(
+    public WantedPoster updateWantedPoster(
             @PathVariable Long id,
             @RequestBody WantedPosterRequest request){
-        return service.udpateBountyContract(id, request);
+        return service.udpateBountyWantedPoster(id, request);
     }
 
     @DeleteMapping("/{id}")
-    @Operation(summary = "Deletes a Bounty Contract", description = "Apaga um cartaz de procurado",
-            tags = {"Bounty Contract"},
+    @Operation(summary = "Deletes a Wanted Poster", description = "Apaga um cartaz de procurado",
+            tags = {"Wanted Poster"},
             responses = {
                     @ApiResponse(description = "Sucess", responseCode = "200",
                             content =
@@ -104,7 +104,7 @@ public class WantedPosterController {
                     @ApiResponse(description = "Not found", responseCode = "404", content = @Content),
                     @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
             })
-    public WantedPoster deleteContract(@PathVariable Long id){
-        return service.deleteBountyContract(id);
+    public WantedPoster deleteWantedPoster(@PathVariable Long id){
+        return service.deleteBountyWantedPoster(id);
     }
 }
