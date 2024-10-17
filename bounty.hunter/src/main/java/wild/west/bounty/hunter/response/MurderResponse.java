@@ -1,15 +1,15 @@
 package wild.west.bounty.hunter.response;
 
+import lombok.AllArgsConstructor;
 import wild.west.bounty.hunter.model.Outlaw;
 import wild.west.bounty.hunter.model.Person;
 
+@AllArgsConstructor
 public class MurderResponse {
 
     private Person killer;
-    private Person victim;
 
-    public MurderResponse(Person killer, Person victim) {
-    }
+    private Person victim;
 
     public String toString(MurderResponse response) {
         String finalMessage = response.killer.getName().concat (
