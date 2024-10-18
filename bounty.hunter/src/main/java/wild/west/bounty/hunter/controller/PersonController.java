@@ -109,7 +109,7 @@ public class PersonController {
         var sortDirection = sort.equalsIgnoreCase("DESC") ? Sort.Direction.DESC :
                 Sort.Direction.ASC;
 
-        Pageable pageable = PageRequest.of(page, size, Sort.by(sortDirection, "cowboyName"));
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sortDirection, "name"));
 
         return ResponseEntity.ok(personService.findByPersonType(objectType, pageable));
     }
