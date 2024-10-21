@@ -112,12 +112,12 @@ public class PersonService {
 
         victim.setAlive(false);
 
-        BigDecimal bounty = calculateBounty(victim);
+        BigDecimal amountToBeAddedToBounty = calculateBounty(victim);
         if (killer instanceof Outlaw){
-            ((Outlaw) killer).setBountyValue(((Outlaw) killer).getBountyValue().add(calculateBounty(victim)));
+            ((Outlaw) killer).setBountyValue(((Outlaw) killer).getBountyValue().add(amountToBeAddedToBounty));
         }else{
             killer = ((Outlaw) killer);
-            ((Outlaw) killer).setBountyValue(calculateBounty(victim));
+            ((Outlaw) killer).setBountyValue(amountToBeAddedToBounty);
         }
 
         personRepository.save(killer);
