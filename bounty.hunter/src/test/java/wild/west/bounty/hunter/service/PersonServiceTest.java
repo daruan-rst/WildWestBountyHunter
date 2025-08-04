@@ -8,11 +8,13 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import wild.west.bounty.hunter.model.BountyHunter;
 import wild.west.bounty.hunter.model.Citizen;
+import wild.west.bounty.hunter.model.Outlaw;
 import wild.west.bounty.hunter.model.Person;
 import wild.west.bounty.hunter.repositories.PersonRepository;
 
-import static org.junit.jupiter.api.Assertions.assertInstanceOf;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import java.math.BigDecimal;
+
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static wild.west.bounty.hunter.model.enums.Reputation.CRUEL;
@@ -48,7 +50,7 @@ class PersonServiceTest {
     void createBountyHunter_shouldSetAliveToTrue() {
         someone = new BountyHunter();
         someone.setId(1L);
-        someone.setName("John Wayne");
+        someone.setName("Joanne");
         someone.setAlive(false);
 
         BountyHunter hunter = (BountyHunter) someone;
@@ -63,5 +65,31 @@ class PersonServiceTest {
         // Assert
         assertTrue(citizen.isAlive());
         assertInstanceOf(BountyHunter.class, citizen);
+        BountyHunter thisBountyHunter = (BountyHunter) citizen;
+        assertEquals(CRUEL, thisBountyHunter.getReputation());
     }
+
+    @Test
+    void createOutlaw_shouldSetAliveToTrue() {
+        someone = new Outlaw();
+        someone.setId(1L);
+        someone.setName("John Doe");
+        someone.setAlive(false);
+
+        Outlaw outlaw = (Outlaw) someone;
+
+        outlaw.setBountyValue(BigDecimal.valueOf(10000));
+
+        when(personRepository.save(any(Person.class))).thenReturn(outlaw);
+
+        // Act
+        Person citizen = personService.createPerson(outlaw);
+
+        // Assert
+        assertTrue(citizen.isAlive());
+        assertInstanceOf(Outlaw.class, citizen);
+        Outlaw thisOutlaw = (Outlaw) citizen;
+        assertEquals(BigDecimal.valueOf(10000), thisOutlaw.getBountyValue());
+    }
+
 }
