@@ -6,10 +6,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import wild.west.bounty.hunter.model.BountyHunter;
-import wild.west.bounty.hunter.model.Citizen;
-import wild.west.bounty.hunter.model.Outlaw;
-import wild.west.bounty.hunter.model.Person;
+import wild.west.bounty.hunter.model.*;
 import wild.west.bounty.hunter.repositories.PersonRepository;
 
 import java.math.BigDecimal;
@@ -90,6 +87,23 @@ class PersonServiceTest {
         assertInstanceOf(Outlaw.class, citizen);
         Outlaw thisOutlaw = (Outlaw) citizen;
         assertEquals(BigDecimal.valueOf(10000), thisOutlaw.getBountyValue());
+    }
+
+    @Test
+    void createSheriff_shouldSetAliveToTrue() {
+        someone = new Sheriff();
+        someone.setId(1L);
+        someone.setName("Joan of Arc");
+        someone.setAlive(false);
+
+        when(personRepository.save(any(Person.class))).thenReturn(someone);
+
+        // Act
+        Person citizen = personService.createPerson(someone);
+
+        // Assert
+        assertTrue(citizen.isAlive());
+        assertInstanceOf(Sheriff.class, citizen);
     }
 
 }
