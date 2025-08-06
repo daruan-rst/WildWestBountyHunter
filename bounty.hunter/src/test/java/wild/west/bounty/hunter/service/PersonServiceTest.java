@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static wild.west.bounty.hunter.model.enums.Reputation.CRUEL;
 
 @ExtendWith(MockitoExtension.class)
@@ -41,6 +41,9 @@ class PersonServiceTest {
         // Assert
         assertTrue(citizen.isAlive());
         assertInstanceOf(Citizen.class, citizen);
+        verify(personRepository, times(1)).save(someone);
+        assertNotNull(citizen.getLinks());
+        assertTrue(citizen.getLinks().hasLink("self"));
     }
 
     @Test
@@ -64,6 +67,9 @@ class PersonServiceTest {
         assertInstanceOf(BountyHunter.class, citizen);
         BountyHunter thisBountyHunter = (BountyHunter) citizen;
         assertEquals(CRUEL, thisBountyHunter.getReputation());
+        verify(personRepository, times(1)).save(hunter);
+        assertNotNull(citizen.getLinks());
+        assertTrue(citizen.getLinks().hasLink("self"));
     }
 
     @Test
@@ -87,6 +93,9 @@ class PersonServiceTest {
         assertInstanceOf(Outlaw.class, citizen);
         Outlaw thisOutlaw = (Outlaw) citizen;
         assertEquals(BigDecimal.valueOf(10000), thisOutlaw.getBountyValue());
+        verify(personRepository, times(1)).save(outlaw);
+        assertNotNull(citizen.getLinks());
+        assertTrue(citizen.getLinks().hasLink("self"));
     }
 
     @Test
@@ -104,6 +113,15 @@ class PersonServiceTest {
         // Assert
         assertTrue(citizen.isAlive());
         assertInstanceOf(Sheriff.class, citizen);
+        verify(personRepository, times(1)).save(someone);
+        assertNotNull(citizen.getLinks());
+        assertTrue(citizen.getLinks().hasLink("self"));
+    }
+
+    @Test
+    void createPerson_shouldHandleNullInput() {
+        // Arrange & Act & Assert
+        assertThrows(NullPointerException.class, () -> personService.createPerson(null));
     }
 
 }
