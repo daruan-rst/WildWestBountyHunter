@@ -172,5 +172,26 @@ class PersonServiceTest {
         verify(personRepository, times(1)).findAll(pageable);
     }
 
+    @Test
+    void findAll_shouldHandleEmptyResults() {
+        // Arrange
+        pageable = PageRequest.of(0, 10, Sort.by("name"));
+        Page<Person> emptyPage = new PageImpl<>(List.of(), pageable, 0);
+        PagedModel<EntityModel<Person>> emptyPagedModel = PagedModel.of(
+                List.of(),
+                new PagedModel.PageMetadata(10, 0, 0)
+        );
+
+        when(personRepository.findAll(any(Pageable.class))).thenReturn(emptyPage);
+        when(assembler.toModel(eq(emptyPage), any(Link.class))).thenReturn(emptyPagedModel);
+
+        // Act
+        PagedModel<EntityModel<Person>> result = personService.findAll(pageable);
+
+        // Assert
+        assertNotNull(result);
+        assertTrue(result.getContent().isEmpty());
+    }
+
 
 }
