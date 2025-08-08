@@ -34,7 +34,7 @@ public class PersonService {
 
     public PagedModel<EntityModel<Person>> findAll(Pageable pageable) {
 
-        var people = personRepository.findAll(pageable);
+        Page<Person> people = personRepository.findAll(pageable);
 
         people.forEach(h -> h.add(linkTo(methodOn(PersonController.class).findById(h.getId())).withSelfRel()));
 

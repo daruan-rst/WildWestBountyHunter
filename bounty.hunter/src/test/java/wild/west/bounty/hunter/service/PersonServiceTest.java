@@ -6,10 +6,17 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.*;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.PagedModel;
 import wild.west.bounty.hunter.model.*;
 import wild.west.bounty.hunter.repositories.PersonRepository;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -22,10 +29,17 @@ class PersonServiceTest {
     @Mock
     private PersonRepository personRepository;
 
+    @Mock
+    private PagedResourcesAssembler<Person> assembler;
+
     @InjectMocks
     private PersonService personService;
 
     private Person someone;
+    private Pageable pageable;
+    private Page<Person> personPage;
+    private List<Person> personList;
+    private PagedModel<EntityModel<Person>> pagedModel;
 
     @Test
     void createCitizen_shouldSetAliveToTrue() {
@@ -123,5 +137,40 @@ class PersonServiceTest {
         // Arrange & Act & Assert
         assertThrows(NullPointerException.class, () -> personService.createPerson(null));
     }
+
+    @Test
+    void findAll_shouldReturnPagedModel() {
+        // Arrange
+
+        Person person1 = new Outlaw();
+        person1.setId(1L);
+        person1.setName("Win Butler");
+
+        Person person2 = new Sheriff();
+        person2.setId(2L);
+        person2.setName("Régine Chassagne");
+
+        personList = Arrays.asList(person1, person2);
+        pageable = PageRequest.of(0, 10, Sort.by("name"));
+        personPage = new PageImpl<>(personList, pageable, personList.size());
+
+        // Mock paged model
+        pagedModel = PagedModel.of(
+                Arrays.asList(EntityModel.of(person1), EntityModel.of(person2)),
+                new PagedModel.PageMetadata(10, 0, 2));
+
+
+        when(personRepository.findAll(any(Pageable.class))).thenReturn(personPage);
+        when(assembler.toModel(eq(personPage), any(Link.class))).thenReturn(pagedModel);
+
+        // Act
+        PagedModel<EntityModel<Person>> result = personService.findAll(pageable);
+
+        // Assert
+        assertNotNull(result);
+        assertEquals(2, result.getContent().size());
+        verify(personRepository, times(1)).findAll(pageable);
+    }
+
 
 }
