@@ -230,4 +230,41 @@ class PersonServiceTest {
         verify(personRepository, times(1)).findPersonByObjectType(personType, pageable);
     }
 
+    @Test
+    void findByPersonType_shouldHandleEmptyResults() {
+        // Arrange
+
+        Person outlaw = new Outlaw();
+        outlaw.setId(1L);
+        outlaw.setName("Win Butler");
+
+        Person sheriff = new Sheriff();
+        sheriff.setId(2L);
+        sheriff.setName("Régine Chassagne");
+
+        personList = Arrays.asList(outlaw, sheriff);
+        pageable = PageRequest.of(0, 10, Sort.by("name"));
+        personPage = new PageImpl<>(personList, pageable, personList.size());
+
+
+        String personType = "ASTRONAUT";
+        Page<Person> emptyPage = new PageImpl<>(List.of(), pageable, 0);
+        PagedModel<EntityModel<Person>> emptyPagedModel = PagedModel.of(
+                List.of(),
+                new PagedModel.PageMetadata(10, 0, 0)
+        );
+
+        when(personRepository.findPersonByObjectType(eq(personType), any(Pageable.class)))
+                .thenReturn(emptyPage);
+        when(assembler.toModel(eq(emptyPage), any(Link.class)))
+                .thenReturn(emptyPagedModel);
+
+        // Act
+        PagedModel<EntityModel<Person>> result = personService.findByPersonType(personType, pageable);
+
+        // Assert
+        assertNotNull(result);
+        assertTrue(result.getContent().isEmpty());
+    }
+
 }
