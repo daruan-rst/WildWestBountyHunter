@@ -193,5 +193,41 @@ class PersonServiceTest {
         assertTrue(result.getContent().isEmpty());
     }
 
+    @Test
+    void findByPersonType_shouldReturnPagedModelForValidType() {
+
+        Person outlaw = new Outlaw();
+        outlaw.setId(1L);
+        outlaw.setName("Win Butler");
+
+        Person sheriff = new Sheriff();
+        sheriff.setId(2L);
+        sheriff.setName("Régine Chassagne");
+
+        personList = Arrays.asList(outlaw, sheriff);
+        pageable = PageRequest.of(0, 10, Sort.by("name"));
+        personPage = new PageImpl<>(personList, pageable, personList.size());
+
+        // Mock paged model
+        pagedModel = PagedModel.of(
+                Arrays.asList(EntityModel.of(outlaw), EntityModel.of(sheriff)),
+                new PagedModel.PageMetadata(10, 0, 2)
+        );
+
+        // Arrange
+        String personType = "OUTLAW";
+        when(personRepository.findPersonByObjectType(eq(personType), any(Pageable.class)))
+                .thenReturn(personPage);
+        when(assembler.toModel(eq(personPage), any(Link.class)))
+                .thenReturn(pagedModel);
+
+        // Act
+        PagedModel<EntityModel<Person>> result = personService.findByPersonType(personType, pageable);
+
+        // Assert
+        assertNotNull(result);
+        assertEquals(2, result.getContent().size());
+        verify(personRepository, times(1)).findPersonByObjectType(personType, pageable);
+    }
 
 }
