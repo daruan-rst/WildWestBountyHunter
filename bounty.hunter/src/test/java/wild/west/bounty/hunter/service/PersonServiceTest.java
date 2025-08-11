@@ -267,4 +267,28 @@ class PersonServiceTest {
         assertTrue(result.getContent().isEmpty());
     }
 
+    @Test
+    void findByPersonType_shouldHandleInvalidPersonType() {
+        // Arrange
+        pageable = PageRequest.of(0, 10, Sort.by("name"));
+        String invalidType = "INVALID_TYPE";
+        Page<Person> emptyPage = new PageImpl<>(List.of(), pageable, 0);
+        PagedModel<EntityModel<Person>> emptyPagedModel = PagedModel.of(
+                List.of(),
+                new PagedModel.PageMetadata(10, 0, 0)
+        );
+
+        when(personRepository.findPersonByObjectType(eq(invalidType), any(Pageable.class)))
+                .thenReturn(emptyPage);
+        when(assembler.toModel(eq(emptyPage), any(Link.class)))
+                .thenReturn(emptyPagedModel);
+
+        // Act
+        PagedModel<EntityModel<Person>> result = personService.findByPersonType(invalidType, pageable);
+
+        // Assert
+        assertNotNull(result);
+        assertTrue(result.getContent().isEmpty());
+    }
+
 }
