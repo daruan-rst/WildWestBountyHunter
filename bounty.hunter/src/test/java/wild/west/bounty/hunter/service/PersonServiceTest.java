@@ -228,6 +228,10 @@ class PersonServiceTest {
         assertNotNull(result);
         assertEquals(2, result.getContent().size());
         verify(personRepository, times(1)).findPersonByObjectType(personType, pageable);
+        result.getContent().forEach(entityModel -> {
+            Person person = entityModel.getContent();
+            assertTrue(person.getLinks().hasLink("self"));
+        });
     }
 
     @Test
@@ -265,6 +269,10 @@ class PersonServiceTest {
         // Assert
         assertNotNull(result);
         assertTrue(result.getContent().isEmpty());
+        result.getContent().forEach(entityModel -> {
+            Person person = entityModel.getContent();
+            assertTrue(person.getLinks().hasLink("self"));
+        });
     }
 
     @Test
@@ -289,6 +297,12 @@ class PersonServiceTest {
         // Assert
         assertNotNull(result);
         assertTrue(result.getContent().isEmpty());
+        result.getContent().forEach(entityModel -> {
+            Person person = entityModel.getContent();
+            assertTrue(person.getLinks().hasLink("self"));
+        });
     }
+
+
 
 }
