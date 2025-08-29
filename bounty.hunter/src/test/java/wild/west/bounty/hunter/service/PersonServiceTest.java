@@ -17,6 +17,7 @@ import wild.west.bounty.hunter.repositories.PersonRepository;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -301,6 +302,37 @@ class PersonServiceTest {
             Person person = entityModel.getContent();
             assertTrue(person.getLinks().hasLink("self"));
         });
+    }
+
+    @Test
+    void updatePerson(){
+        someone = new BountyHunter();
+        someone.setId(1L);
+        someone.setName("Joanne");
+        someone.setAlive(false);
+
+        BountyHunter hunter = (BountyHunter) someone;
+
+        hunter.setReputation(CRUEL);
+
+        when(personRepository.findById(anyLong())).thenReturn(Optional.of(hunter));
+
+        BountyHunter newHunter = hunter;
+        newHunter.setName("Diamond Heart");
+        when(personRepository.save(any(Person.class))).thenReturn(newHunter);
+
+        // Act
+        Person citizen = personService.updatePerson(hunter, hunter.getId());
+
+        // Assert
+        assertFalse(citizen.isAlive());
+        assertInstanceOf(BountyHunter.class, citizen);
+        BountyHunter thisBountyHunter = (BountyHunter) citizen;
+        assertEquals(CRUEL, thisBountyHunter.getReputation());
+        verify(personRepository, times(1)).findById(hunter.getId());
+        verify(personRepository, times(1)).save(newHunter);
+        assertNotNull(citizen.getLinks());
+        assertTrue(citizen.getLinks().hasLink("self"));
     }
 
 
