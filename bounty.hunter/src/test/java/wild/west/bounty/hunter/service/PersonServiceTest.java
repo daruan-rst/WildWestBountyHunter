@@ -11,6 +11,7 @@ import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.PagedModel;
+import wild.west.bounty.hunter.exceptions.ResourceNotFoundException;
 import wild.west.bounty.hunter.model.*;
 import wild.west.bounty.hunter.repositories.PersonRepository;
 
@@ -333,6 +334,23 @@ class PersonServiceTest {
         verify(personRepository, times(1)).save(newHunter);
         assertNotNull(citizen.getLinks());
         assertTrue(citizen.getLinks().hasLink("self"));
+    }
+
+
+    @Test
+    void updatePerson_notFound() {
+        // given
+        Long personId = 1L;
+        Person updateData = new BountyHunter();
+        updateData.setOrigin(new Town());
+
+        when(personRepository.findById(personId)).thenReturn(Optional.empty());
+
+        // when / then
+        assertThrows(ResourceNotFoundException.class,
+                () -> personService.updatePerson(updateData, personId));
+
+        verify(personRepository, never()).save(any());
     }
 
 
