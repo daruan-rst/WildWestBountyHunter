@@ -334,6 +334,8 @@ class PersonServiceTest {
         verify(personRepository, times(1)).save(newHunter);
         assertNotNull(citizen.getLinks());
         assertTrue(citizen.getLinks().hasLink("self"));
+        assertTrue(citizen.getLinks().getRequiredLink("self").getHref().contains("api/person/v1/1"));
+
     }
 
 
@@ -351,6 +353,7 @@ class PersonServiceTest {
                 () -> personService.updatePerson(updateData, personId));
 
         verify(personRepository, never()).save(any());
+
     }
 
 
