@@ -356,6 +356,27 @@ class PersonServiceTest {
 
     }
 
+    @Test
+    void deletePerson(){
+        someone = new BountyHunter();
+        someone.setId(1L);
+        someone.setName("Joanne");
+        someone.setAlive(false);
+
+        BountyHunter hunter = (BountyHunter) someone;
+
+        hunter.setReputation(CRUEL);
+
+        when(personRepository.save(any(Person.class))).thenReturn(hunter);
+        when(personRepository.findById(hunter.getId())).thenReturn(Optional.of(hunter));
 
 
+        // Act
+        Person citizen = personService.createPerson(hunter);
+
+        personService.deletePersonById(hunter.getId());
+
+        //then
+        verify(personRepository, atMostOnce()).delete(any());
+    }
 }
