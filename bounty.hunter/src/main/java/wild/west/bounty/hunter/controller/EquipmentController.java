@@ -14,92 +14,104 @@ import wild.west.bounty.hunter.service.EquipmentService;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api/equipment/v1")
-@Tag(name = "Equipment", description = "Endpoints para a entidade Equipment")
+@Tag(name = "Equipment", description = "Operations related to equipment management")
 public class EquipmentController {
 
     private EquipmentService service;
 
-    @GetMapping(value =  "/{id}")
-    @Operation(summary = "Retrieves an Equipment by its id", description = "Com este endpoint, podemos retornar um Equipment com o seu Id",
+    @GetMapping("/{id}")
+    @Operation(
+            summary = "Get equipment by ID",
+            description = "Retrieves a specific equipment entity using its unique identifier.",
             tags = {"Equipment"},
             responses = {
-                    @ApiResponse(description = "Sucess", responseCode = "200",
-                            content = {
-                                    @Content(
-                                            mediaType = "application/json",
-                                            array = @ArraySchema(schema = @Schema(implementation = Equipment.class))
-                                    )
-                            }),
-                    @ApiResponse(description = "BadRequest", responseCode = "400", content = @Content),
-                    @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
-                    @ApiResponse(description = "Not found", responseCode = "404", content = @Content),
-                    @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
-            })
-    public Equipment findEquipmentById(@PathVariable(value = "id") Long id){
+                    @ApiResponse(responseCode = "200", description = "Equipment successfully retrieved",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = Equipment.class)
+                            )
+                    ),
+                    @ApiResponse(responseCode = "400", description = "Invalid ID supplied", content = @Content),
+                    @ApiResponse(responseCode = "401", description = "Unauthorized request", content = @Content),
+                    @ApiResponse(responseCode = "404", description = "Equipment not found", content = @Content),
+                    @ApiResponse(responseCode = "500", description = "Server error", content = @Content)
+            }
+    )
+    public Equipment findEquipmentById(@PathVariable Long id) {
         return service.findById(id);
     }
+
     @PostMapping
-    @Operation(summary = "Creates an Equipment", description = "Equipment",
+    @Operation(
+            summary = "Create new equipment",
+            description = "Creates a new equipment entry in the system. The request body must contain valid equipment details.",
             tags = {"Equipment"},
             responses = {
-                    @ApiResponse(description = "Sucess", responseCode = "200",
-                            content =
-                            @Content(schema = @Schema(implementation = Equipment.class))),
-                    @ApiResponse(description = "BadRequest", responseCode = "400", content = @Content),
-                    @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
-                    @ApiResponse(description = "Not found", responseCode = "404", content = @Content),
-                    @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
-            })
-    public Equipment createAEquipment(@RequestBody Equipment equipment){
+                    @ApiResponse(responseCode = "201", description = "Equipment successfully created",
+                            content = @Content(schema = @Schema(implementation = Equipment.class))
+                    ),
+                    @ApiResponse(responseCode = "400", description = "Invalid input data", content = @Content),
+                    @ApiResponse(responseCode = "401", description = "Unauthorized request", content = @Content),
+                    @ApiResponse(responseCode = "500", description = "Server error", content = @Content)
+            }
+    )
+    public Equipment createAnEquipment(@RequestBody Equipment equipment) {
         return service.createEquipment(equipment);
     }
 
-    @PutMapping(value = "/{id}")
-    @Operation(summary = "Updates an Equipment", description = "Equipment",
+    @PutMapping("/{id}")
+    @Operation(
+            summary = "Update existing equipment",
+            description = "Updates an existing equipment record identified by its ID. All fields in the request body will replace existing values.",
             tags = {"Equipment"},
             responses = {
-                    @ApiResponse(description = "Sucess", responseCode = "200",
-                            content =
-                            @Content(schema = @Schema(implementation = Equipment.class))),
-                    @ApiResponse(description = "BadRequest", responseCode = "400", content = @Content),
-                    @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
-                    @ApiResponse(description = "Not found", responseCode = "404", content = @Content),
-                    @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
-            })
-    public Equipment updateAnEquipment(@PathVariable Long id,
-                                       @RequestBody Equipment equipment) {
+                    @ApiResponse(responseCode = "200", description = "Equipment successfully updated",
+                            content = @Content(schema = @Schema(implementation = Equipment.class))
+                    ),
+                    @ApiResponse(responseCode = "400", description = "Invalid input data", content = @Content),
+                    @ApiResponse(responseCode = "401", description = "Unauthorized request", content = @Content),
+                    @ApiResponse(responseCode = "404", description = "Equipment not found", content = @Content),
+                    @ApiResponse(responseCode = "500", description = "Server error", content = @Content)
+            }
+    )
+    public Equipment updateAnEquipment(@PathVariable Long id, @RequestBody Equipment equipment) {
         return service.updateEquipment(id, equipment);
-
     }
 
-    @PatchMapping("equipment/{equipmentId}/person/{personId}")
-    @Operation(summary = "Adds an Equipment to a person", description = "Equipment",
+    @PatchMapping("/equipment/{equipmentId}/person/{personId}")
+    @Operation(
+            summary = "Assign equipment to a person",
+            description = "Associates an existing equipment with a specific person, effectively assigning it to them.",
             tags = {"Equipment"},
             responses = {
-                    @ApiResponse(description = "Sucess", responseCode = "200",
-                            content =
-                            @Content(schema = @Schema(implementation = Equipment.class))),
-                    @ApiResponse(description = "BadRequest", responseCode = "400", content = @Content),
-                    @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
-                    @ApiResponse(description = "Not found", responseCode = "404", content = @Content),
-                    @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
-            })
-    public Equipment addsAnEquipmentToPerson(@PathVariable Long equipmentId,
-                                             @PathVariable Long personId){
+                    @ApiResponse(responseCode = "200", description = "Equipment successfully assigned",
+                            content = @Content(schema = @Schema(implementation = Equipment.class))
+                    ),
+                    @ApiResponse(responseCode = "400", description = "Invalid ID provided", content = @Content),
+                    @ApiResponse(responseCode = "401", description = "Unauthorized request", content = @Content),
+                    @ApiResponse(responseCode = "404", description = "Equipment or person not found", content = @Content),
+                    @ApiResponse(responseCode = "500", description = "Server error", content = @Content)
+            }
+    )
+    public Equipment assignEquipmentToPerson(@PathVariable Long equipmentId, @PathVariable Long personId) {
         return service.addingAnEquipmentToPerson(personId, equipmentId);
     }
 
-    @DeleteMapping(value = "/{id}")
-    @Operation(summary = "Deletes an Equipment", description = "Deletes a Equipment",
+    @DeleteMapping("/{id}")
+    @Operation(
+            summary = "Delete equipment",
+            description = "Removes an equipment record permanently from the system based on its ID.",
             tags = {"Equipment"},
             responses = {
-                    @ApiResponse(description = "Sucess", responseCode = "200",
-                            content = @Content(schema = @Schema(implementation = Equipment.class))),
-                    @ApiResponse(description = "BadRequest", responseCode = "400", content = @Content),
-                    @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
-                    @ApiResponse(description = "Not found", responseCode = "404", content = @Content),
-                    @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
-            })
+                    @ApiResponse(responseCode = "200", description = "Equipment successfully deleted",
+                            content = @Content(schema = @Schema(implementation = Equipment.class))
+                    ),
+                    @ApiResponse(responseCode = "400", description = "Invalid ID supplied", content = @Content),
+                    @ApiResponse(responseCode = "401", description = "Unauthorized request", content = @Content),
+                    @ApiResponse(responseCode = "404", description = "Equipment not found", content = @Content),
+                    @ApiResponse(responseCode = "500", description = "Server error", content = @Content)
+            }
+    )
     public Equipment deleteEquipment(@PathVariable Long id) {
         return service.deleteEquipment(id);
     }

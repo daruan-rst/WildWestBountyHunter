@@ -32,7 +32,7 @@ public class EquipmentService {
     public Equipment createEquipment(Equipment equipment){
         log.info("Creating a equipment");
         equipment = repository.save(equipment);
-        equipment.add(linkTo(methodOn(EquipmentController.class).createAEquipment(equipment)).withSelfRel());
+        equipment.add(linkTo(methodOn(EquipmentController.class).createAnEquipment(equipment)).withSelfRel());
         return equipment;
     }
 

@@ -170,7 +170,7 @@ public class PersonController {
     }
 
     @PatchMapping(value = "/{id}")
-    @Operation(summary = "Updates a person", description = "Updates a person",
+    @Operation(summary = "Adds an equipment", description = "Adds an equipment to a person inventory. The parameters are the id (as a Long) and an equipment",
             tags = {"Person"},
             responses = {
                     @ApiResponse(description = "Sucess", responseCode = "200",
