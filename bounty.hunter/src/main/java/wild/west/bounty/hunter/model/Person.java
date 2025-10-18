@@ -48,7 +48,7 @@ public abstract class Person extends RepresentationModel<Person> implements Seri
     @Column(name="money")
     private BigDecimal money;
 
-    @OneToMany(mappedBy = "person")
+    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Equipment> equipments;
 
     @Column(name="alive")

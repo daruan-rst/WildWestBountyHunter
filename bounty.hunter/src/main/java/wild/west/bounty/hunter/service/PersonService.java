@@ -72,6 +72,10 @@ public class PersonService {
     public Person createPerson(Person person){
         log.info("Creating person");
         person.setAlive(true);
+        if (!person.getEquipments().isEmpty()){
+            Person finalPerson = person;
+            person.getEquipments().forEach(e -> e.setPerson(finalPerson));
+        }
         person = personRepository.save(person);
         person.add(linkTo(methodOn(PersonController.class).createPerson(person)).withSelfRel());
         return person;
