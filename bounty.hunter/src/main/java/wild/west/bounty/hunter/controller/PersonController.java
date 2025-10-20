@@ -176,7 +176,7 @@ public class PersonController {
             }
     )
     public Person addEquipment(@PathVariable Long id, @RequestBody Equipment equipment) {
-        return personService.addEquipment(equipment, id);
+        return personService.addEquipment(equipment, id); // FIXME: it feels really dumb to pass the person id as a path variable and also in the request body; Find a way later to make this less redundant
     }
 
     @DeleteMapping("/{id}")

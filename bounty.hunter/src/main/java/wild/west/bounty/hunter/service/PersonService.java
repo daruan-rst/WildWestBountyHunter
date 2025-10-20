@@ -19,6 +19,8 @@ import wild.west.bounty.hunter.response.MurderResponse;
 import wild.west.bounty.hunter.util.PersonUtils;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -95,7 +97,16 @@ public class PersonService {
         Person person = findById(id);
 
         log.info("Adding an equipment to a person");
-        person.getEquipments().add(equipment);
+
+        List<Equipment> equipments = person.getEquipments();
+
+        if (equipments == null){
+            equipments = new ArrayList<>();
+            person.setEquipments(equipments);
+        }
+
+        equipment.setPerson(person);
+        equipments.add(equipment);
 
         return personRepository.save(person);
     }
