@@ -16,6 +16,7 @@ import wild.west.bounty.hunter.model.*;
 import wild.west.bounty.hunter.repositories.PersonRepository;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -353,6 +354,33 @@ class PersonServiceTest {
                 () -> personService.updatePerson(updateData, personId));
 
         verify(personRepository, never()).save(any());
+
+    }
+
+    @Test
+    void addAnEquipment(){
+        someone = new BountyHunter();
+        someone.setId(1L);
+        someone.setName("John Wayne");
+        someone.setAlive(true);
+
+        BountyHunter hunter = (BountyHunter) someone;
+
+        hunter.setReputation(CRUEL);
+
+        Equipment knife = new Equipment(null, "Super special knife", null, BigDecimal.valueOf(10));
+        Equipment gun = new Equipment(null, "Super special gun", null, BigDecimal.valueOf(11));
+
+        when(personRepository.findById(hunter.getId())).thenReturn(Optional.of(hunter));
+
+//        hunter.setEquipments(new ArrayList<>(List.of(knife, gun)));
+        when(personRepository.save(any(Person.class))).thenReturn(hunter);
+
+        Person somebody = personService.addEquipment(gun, 1L);
+
+        verify(personRepository, atMostOnce()).save(somebody);
+        verify(personRepository, atMostOnce()).findById(hunter.getId());
+
 
     }
 
