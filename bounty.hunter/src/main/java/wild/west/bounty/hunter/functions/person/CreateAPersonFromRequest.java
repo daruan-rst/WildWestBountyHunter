@@ -5,8 +5,8 @@ import wild.west.bounty.hunter.model.BountyHunter;
 import wild.west.bounty.hunter.model.Person;
 
 @FunctionalInterface
-public interface CreateAPersonFromRequest {
+public interface CreateAPersonFromRequest<T extends Person> {
 
-    Person createPerson(PersonRequest request, Class<? extends Person> personType);
+    Person createPerson(PersonRequest request, Class<T> personType);
 
 }
