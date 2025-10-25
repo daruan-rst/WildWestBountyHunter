@@ -10,7 +10,9 @@ import org.springframework.hateoas.Link;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.stereotype.Service;
 import wild.west.bounty.hunter.controller.PersonController;
+import wild.west.bounty.hunter.controller.dto.PersonRequest;
 import wild.west.bounty.hunter.exceptions.ResourceNotFoundException;
+import wild.west.bounty.hunter.model.Citizen;
 import wild.west.bounty.hunter.model.Equipment;
 import wild.west.bounty.hunter.model.Outlaw;
 import wild.west.bounty.hunter.model.Person;
@@ -24,6 +26,7 @@ import java.util.List;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+import static wild.west.bounty.hunter.functions.person.PersonFunctions.mapPerson;
 
 @Service
 @Log
@@ -71,15 +74,19 @@ public class PersonService {
         return person;
     }
 
-    public Person createPerson(Person person){
+    public Person createACitizen(PersonRequest personRequest){
+        return createPerson(personRequest, Citizen.class);
+    }
+
+    private Person createPerson(PersonRequest personRequest, Class<? extends Person> personType){
         log.info("Creating person");
-        person.setAlive(true);
+        Person person = mapPerson.createPerson(personRequest, personType);
         if (!person.getEquipments().isEmpty()){
             Person finalPerson = person;
             person.getEquipments().forEach(e -> e.setPerson(finalPerson));
         }
         person = personRepository.save(person);
-        person.add(linkTo(methodOn(PersonController.class).createPerson(person)).withSelfRel());
+        person.add(linkTo(methodOn(PersonController.class).createACitizen(personRequest)).withSelfRel());
         return person;
     }
 

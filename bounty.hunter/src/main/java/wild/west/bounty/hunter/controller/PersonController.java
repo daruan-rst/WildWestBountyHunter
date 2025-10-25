@@ -14,6 +14,7 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import wild.west.bounty.hunter.controller.dto.PersonRequest;
 import wild.west.bounty.hunter.model.Equipment;
 import wild.west.bounty.hunter.model.Person;
 import wild.west.bounty.hunter.response.MurderResponse;
@@ -109,7 +110,7 @@ public class PersonController {
 
     @PostMapping
     @Operation(
-            summary = "Create a new person",
+            summary = "Create a new Citizen",
             description = "Registers a new person in the system with the provided attributes.",
             tags = {"Person"},
             responses = {
@@ -120,8 +121,8 @@ public class PersonController {
                     @ApiResponse(responseCode = "500", description = "Server error", content = @Content)
             }
     )
-    public Person createPerson(@RequestBody Person person) {
-        return personService.createPerson(person);
+    public Person createACitizen(@RequestBody PersonRequest person) {
+        return personService.createACitizen(person);
     }
 
     @PutMapping("/{id}")
