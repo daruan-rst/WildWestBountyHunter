@@ -125,6 +125,23 @@ public class PersonController {
         return personService.createACitizen(person);
     }
 
+    @PostMapping
+    @Operation(
+            summary = "Create a new Citizen",
+            description = "Registers a new person in the system with the provided attributes.",
+            tags = {"Person"},
+            responses = {
+                    @ApiResponse(responseCode = "201", description = "Person successfully created",
+                            content = @Content(schema = @Schema(implementation = Person.class))),
+                    @ApiResponse(responseCode = "400", description = "Invalid input data", content = @Content),
+                    @ApiResponse(responseCode = "401", description = "Unauthorized request", content = @Content),
+                    @ApiResponse(responseCode = "500", description = "Server error", content = @Content)
+            }
+    )
+    public Person createAnOutlaw(@RequestBody PersonRequest person) {
+        return personService.createAnOutlaw(person);
+    }
+
     @PutMapping("/{id}")
     @Operation(
             summary = "Update an existing person",

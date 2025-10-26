@@ -74,8 +74,20 @@ public class PersonService {
         return person;
     }
 
-    public Person createACitizen(PersonRequest personRequest){
-        return createPerson(personRequest, Citizen.class);
+    public Person createACitizen(PersonRequest person){
+        Person citizen = createPerson(person, Citizen.class);
+
+        citizen.add(linkTo(methodOn(PersonController.class).createACitizen(person)).withSelfRel());
+
+        return citizen;
+    }
+
+    public Person createAnOutlaw(PersonRequest person) {
+        Person outlaw = createPerson(person, Outlaw.class);
+
+        outlaw.add(linkTo(methodOn(PersonController.class).createAnOutlaw(person)).withSelfRel());
+
+        return outlaw;
     }
 
     private Person createPerson(PersonRequest personRequest, Class<? extends Person> personType){
@@ -86,7 +98,6 @@ public class PersonService {
             person.getEquipments().forEach(e -> e.setPerson(finalPerson));
         }
         person = personRepository.save(person);
-        person.add(linkTo(methodOn(PersonController.class).createACitizen(personRequest)).withSelfRel());
         return person;
     }
 

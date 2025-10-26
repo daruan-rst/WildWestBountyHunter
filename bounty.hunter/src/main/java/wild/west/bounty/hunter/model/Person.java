@@ -21,7 +21,7 @@ import java.util.List;
 @JsonSubTypes({@Type(value = Sheriff.class, name = "SHERIFF"),
         @Type(value = BountyHunter.class, name = "BOUNTY_HUNTER"),
         @Type(value = Outlaw.class, name = "OUTLAW"),
-        @Type(value = Outlaw.class, name = "CITIZEN")})
+        @Type(value = Citizen.class, name = "CITIZEN")})
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "_person_type", discriminatorType = DiscriminatorType.STRING, length = 64)
 @Entity
