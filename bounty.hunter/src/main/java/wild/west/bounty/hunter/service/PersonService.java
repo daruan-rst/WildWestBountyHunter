@@ -12,10 +12,7 @@ import org.springframework.stereotype.Service;
 import wild.west.bounty.hunter.controller.PersonController;
 import wild.west.bounty.hunter.controller.dto.PersonRequest;
 import wild.west.bounty.hunter.exceptions.ResourceNotFoundException;
-import wild.west.bounty.hunter.model.Citizen;
-import wild.west.bounty.hunter.model.Equipment;
-import wild.west.bounty.hunter.model.Outlaw;
-import wild.west.bounty.hunter.model.Person;
+import wild.west.bounty.hunter.model.*;
 import wild.west.bounty.hunter.repositories.PersonRepository;
 import wild.west.bounty.hunter.response.MurderResponse;
 import wild.west.bounty.hunter.util.PersonUtils;
@@ -88,6 +85,14 @@ public class PersonService {
         outlaw.add(linkTo(methodOn(PersonController.class).createAnOutlaw(person)).withSelfRel());
 
         return outlaw;
+    }
+
+    public Person createABountyHunter(PersonRequest person) {
+        Person bountyHunter = createPerson(person, BountyHunter.class);
+
+        bountyHunter.add(linkTo(methodOn(PersonController.class).createABountyHunter(person)).withSelfRel());
+
+        return bountyHunter;
     }
 
     private Person createPerson(PersonRequest personRequest, Class<? extends Person> personType){
