@@ -95,6 +95,14 @@ public class PersonService {
         return bountyHunter;
     }
 
+    public Person createASheriff(PersonRequest person) {
+        Person sheriff = createPerson(person, Sheriff.class);
+
+        sheriff.add(linkTo(methodOn(PersonController.class).createASheriff(person)).withSelfRel());
+
+        return sheriff;
+    }
+
     private Person createPerson(PersonRequest personRequest, Class<? extends Person> personType){
         log.info("Creating person");
         Person person = mapPerson.createPerson(personRequest, personType);
@@ -171,4 +179,6 @@ public class PersonService {
                     .reduce( (a,b) -> BigDecimal.ZERO.add(b))
                     .get());
     }
+
+
 }
