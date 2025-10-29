@@ -108,7 +108,7 @@ public class PersonController {
         return ResponseEntity.ok(personService.findByPersonType(job, pageable));
     }
 
-    @PostMapping
+    @PostMapping("/citizen")
     @Operation(
             summary = "Create a new Citizen",
             description = "Registers a new person in the system with the provided attributes.",
@@ -125,7 +125,7 @@ public class PersonController {
         return personService.createACitizen(person);
     }
 
-    @PostMapping
+    @PostMapping("/outlaw")
     @Operation(
             summary = "Create a new Outlaw",
             description = "Registers a new person in the system with the provided attributes.",
@@ -142,7 +142,7 @@ public class PersonController {
         return personService.createAnOutlaw(person);
     }
 
-    @PostMapping
+    @PostMapping("/bounty-hunter")
     @Operation(
             summary = "Create a new Bounty Hunter",
             description = "Registers a new person in the system with the provided attributes.",
@@ -159,7 +159,7 @@ public class PersonController {
         return personService.createABountyHunter(person);
     }
 
-    @PostMapping
+    @PostMapping("/sheriff")
     @Operation(
             summary = "Create a new Sheriff",
             description = "Registers a new person in the system with the provided attributes.",

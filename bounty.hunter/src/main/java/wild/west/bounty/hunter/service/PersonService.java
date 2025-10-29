@@ -72,6 +72,7 @@ public class PersonService {
     }
 
     public Person createACitizen(PersonRequest person){
+        log.info("Creating a Citizen");
         Person citizen = createPerson(person, Citizen.class);
 
         citizen.add(linkTo(methodOn(PersonController.class).createACitizen(person)).withSelfRel());
@@ -80,6 +81,7 @@ public class PersonService {
     }
 
     public Person createAnOutlaw(PersonRequest person) {
+        log.info("Creating an Outlaw");
         Person outlaw = createPerson(person, Outlaw.class);
 
         outlaw.add(linkTo(methodOn(PersonController.class).createAnOutlaw(person)).withSelfRel());
@@ -88,6 +90,7 @@ public class PersonService {
     }
 
     public Person createABountyHunter(PersonRequest person) {
+        log.info("Creating a Bounty Hunter");
         Person bountyHunter = createPerson(person, BountyHunter.class);
 
         bountyHunter.add(linkTo(methodOn(PersonController.class).createABountyHunter(person)).withSelfRel());
@@ -96,6 +99,7 @@ public class PersonService {
     }
 
     public Person createASheriff(PersonRequest person) {
+        log.info("Creating a Sheriff");
         Person sheriff = createPerson(person, Sheriff.class);
 
         sheriff.add(linkTo(methodOn(PersonController.class).createASheriff(person)).withSelfRel());
@@ -104,7 +108,7 @@ public class PersonService {
     }
 
     private Person createPerson(PersonRequest personRequest, Class<? extends Person> personType){
-        log.info("Creating person");
+
         Person person = mapPerson.createPerson(personRequest, personType);
         if (!person.getEquipments().isEmpty()){
             Person finalPerson = person;
