@@ -176,12 +176,17 @@ public class PersonService {
     }
 
     private BigDecimal calculateBounty(Person victim){
-        return victim.getMoney().add(victim.getEquipments()
-                .stream()
-                .map(eq -> eq.getValue()).toList()
+        return victim.getMoney()
+                .add(
+                    victim.getEquipments().isEmpty() ?
+                    BigDecimal.ZERO :
+                    victim.getMoney().add(victim.getEquipments()
                     .stream()
-                    .reduce( (a,b) -> BigDecimal.ZERO.add(b))
-                    .get());
+                    .map(eq -> eq.getValue()).toList()
+                        .stream()
+                        .reduce( (a,b) -> BigDecimal.ZERO.add(b))
+                        .get())
+                );
     }
 
 
