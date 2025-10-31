@@ -158,12 +158,13 @@ public class PersonService {
         PersonUtils.validateIfAlive(victim);
 
         Person killer = findById(killerId);
-        PersonUtils.validateKiller(killer);
+        PersonUtils.validateVictim(killer);
 
         victim.setAlive(false);
 
         BigDecimal amountToBeAddedToBounty = calculateBounty(victim);
-        if (killer instanceof Outlaw){
+        if (killer instanceof Outlaw &&
+        ((Outlaw) killer).getBountyValue() != null){
             ((Outlaw) killer).setBountyValue(((Outlaw) killer).getBountyValue().add(amountToBeAddedToBounty));
         }else{
             killer = ((Outlaw) killer);

@@ -11,9 +11,9 @@ public class PersonUtils {
         }
     }
 
-    public static void validateKiller(Person killer){
-        if (!killer.isAlive()) {
-            throw new PersonAlreadyDeadException(String.format("%s is dead and won't be able to kill anybody", killer.getName()));
+    public static void validateVictim(Person victim){
+        if (!victim.isAlive()) {
+            throw new PersonAlreadyDeadException(String.format("%s is dead and won't be able to kill anybody", victim.getName()));
         }
     }
 }
