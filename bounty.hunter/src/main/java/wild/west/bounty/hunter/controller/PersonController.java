@@ -207,6 +207,7 @@ public class PersonController {
                             content = @Content(schema = @Schema(implementation = MurderResponse.class))),
                     @ApiResponse(responseCode = "400", description = "Invalid person IDs or business rule violation", content = @Content),
                     @ApiResponse(responseCode = "404", description = "Killer or victim not found", content = @Content),
+                    @ApiResponse(responseCode = "409", description = "Killer or victim are dead and cannot perform the action", content = @Content),
                     @ApiResponse(responseCode = "500", description = "Server error", content = @Content)
             }
     )

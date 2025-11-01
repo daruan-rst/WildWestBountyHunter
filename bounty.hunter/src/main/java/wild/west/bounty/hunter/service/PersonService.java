@@ -158,7 +158,7 @@ public class PersonService {
         PersonUtils.validateIfAlive(victim);
 
         Person killer = findById(killerId);
-        PersonUtils.validateVictim(killer);
+        PersonUtils.validateKiller(killer);
 
         victim.setAlive(false);
 
