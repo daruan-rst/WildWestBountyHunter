@@ -14,6 +14,7 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import wild.west.bounty.hunter.controller.dto.EquipmentRequest;
 import wild.west.bounty.hunter.controller.dto.PersonRequest;
 import wild.west.bounty.hunter.model.Equipment;
 import wild.west.bounty.hunter.model.Person;
@@ -228,7 +229,7 @@ public class PersonController {
                     @ApiResponse(responseCode = "500", description = "Server error", content = @Content)
             }
     )
-    public Person addEquipment(@PathVariable Long id, @RequestBody Equipment equipment) {
+    public Person addEquipment(@PathVariable Long id, @RequestBody EquipmentRequest equipment) {
         return personService.addEquipment(equipment, id); // FIXME: it feels really dumb to pass the person id as a path variable and also in the request body; Find a way later to make this less redundant
     }
 

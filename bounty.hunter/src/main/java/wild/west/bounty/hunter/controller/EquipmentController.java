@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import wild.west.bounty.hunter.controller.dto.EquipmentRequest;
 import wild.west.bounty.hunter.model.Equipment;
 import wild.west.bounty.hunter.service.EquipmentService;
 
@@ -55,8 +56,8 @@ public class EquipmentController {
                     @ApiResponse(responseCode = "500", description = "Server error", content = @Content)
             }
     )
-    public Equipment createAnEquipment(@RequestBody Equipment equipment) {
-        return service.createEquipment(equipment);
+    public Equipment createAnEquipment(@RequestBody EquipmentRequest equipmentRequest) {
+        return service.createEquipment(equipmentRequest);
     }
 
     @PutMapping("/{id}")

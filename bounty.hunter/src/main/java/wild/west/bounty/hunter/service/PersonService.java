@@ -10,6 +10,7 @@ import org.springframework.hateoas.Link;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.stereotype.Service;
 import wild.west.bounty.hunter.controller.PersonController;
+import wild.west.bounty.hunter.controller.dto.EquipmentRequest;
 import wild.west.bounty.hunter.controller.dto.PersonRequest;
 import wild.west.bounty.hunter.exceptions.ResourceNotFoundException;
 import wild.west.bounty.hunter.model.*;
@@ -23,6 +24,7 @@ import java.util.List;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+import static wild.west.bounty.hunter.functions.equipment.EquipmentFunctions.mapEquipment;
 import static wild.west.bounty.hunter.functions.person.PersonFunctions.mapPerson;
 
 @Service
@@ -128,7 +130,7 @@ public class PersonService {
         return person;
     }
 
-    public Person addEquipment(Equipment equipment, Long id){
+    public Person addEquipment(EquipmentRequest equipmentRequest, Long id){
         Person person = findById(id);
 
         log.info("Adding an equipment to a person");
@@ -138,6 +140,14 @@ public class PersonService {
         if (equipments == null){
             equipments = new ArrayList<>();
             person.setEquipments(equipments);
+        }
+
+        Equipment equipment;
+
+        if (equipmentRequest.id() != null){
+            equipment = equipmentRepository.findBy
+        } else{
+            equipment = mapEquipment.CreateAnEquipmentFromRequest(equipmentRequest);
         }
 
         equipment.setPerson(person);

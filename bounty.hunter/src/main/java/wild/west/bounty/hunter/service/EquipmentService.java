@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
 import org.springframework.stereotype.Service;
 import wild.west.bounty.hunter.controller.EquipmentController;
+import wild.west.bounty.hunter.controller.dto.EquipmentRequest;
 import wild.west.bounty.hunter.exceptions.ResourceNotFoundException;
 import wild.west.bounty.hunter.model.Equipment;
 import wild.west.bounty.hunter.model.Person;
@@ -13,6 +14,7 @@ import java.util.List;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+import static wild.west.bounty.hunter.functions.equipment.EquipmentFunctions.mapEquipment;
 
 @Service
 @AllArgsConstructor
@@ -29,10 +31,11 @@ public class EquipmentService {
         equipment.add(linkTo(methodOn(EquipmentController.class).findEquipmentById(equipment.getId())).withSelfRel());
         return equipment;
     }
-    public Equipment createEquipment(Equipment equipment){
+    public Equipment createEquipment(EquipmentRequest request){
         log.info("Creating a equipment");
+        Equipment equipment = mapEquipment.CreateAnEquipmentFromRequest(request);
         equipment = repository.save(equipment);
-        equipment.add(linkTo(methodOn(EquipmentController.class).createAnEquipment(equipment)).withSelfRel());
+        equipment.add(linkTo(methodOn(EquipmentController.class).createAnEquipment(request)).withSelfRel());
         return equipment;
     }
 

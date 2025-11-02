@@ -5,11 +5,13 @@ import wild.west.bounty.hunter.model.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static wild.west.bounty.hunter.functions.equipment.EquipmentFunctions.mapEquipment;
+
 public class PersonFunctions {
 
     public static CreateAPersonFromRequest mapPerson = ((request, personType) -> {
         Person person = switch (personType.getSimpleName()) {
-            case "Sheriff" -> new Sheriff(); // TODO: FIND A WAY TO USE CLASS PARAMETERS
+            case "Sheriff" -> new Sheriff();
             case "BountyHunter" -> new BountyHunter();
             case "Outlaw" -> new Outlaw();
             case "Citizen" -> new Citizen();
@@ -18,14 +20,11 @@ public class PersonFunctions {
 
         person.setName(request.name());
         person.setMoney(request.money());
-//        person.setOrigin(origin);
 
         if (request.equipmentRequests() != null && !request.equipmentRequests().isEmpty()) {
             List<Equipment> equipmentList = request.equipmentRequests().stream()
                     .map(eq -> {
-                        Equipment e = new Equipment();
-                        e.setEquipmentName(eq.equipmentName());
-                        e.setValue(eq.value());
+                        Equipment e = mapEquipment.CreateAnEquipmentFromRequest(eq);
                         e.setPerson(person);
                         return e;
                     })

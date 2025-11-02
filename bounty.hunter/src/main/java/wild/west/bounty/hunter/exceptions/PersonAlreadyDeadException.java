@@ -7,7 +7,7 @@ import wild.west.bounty.hunter.model.Person;
 
 import java.io.Serial;
 
-@ResponseStatus(HttpStatus.NOT_FOUND)
+@ResponseStatus(HttpStatus.CONFLICT)
 public class PersonAlreadyDeadException extends RuntimeException {
     @Serial
     private static final long serialVersionUID = 1L;
