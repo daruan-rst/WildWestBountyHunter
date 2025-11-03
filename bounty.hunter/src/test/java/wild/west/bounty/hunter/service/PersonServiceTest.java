@@ -11,6 +11,7 @@ import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.PagedModel;
+import wild.west.bounty.hunter.controller.dto.EquipmentRequest;
 import wild.west.bounty.hunter.exceptions.ResourceNotFoundException;
 import wild.west.bounty.hunter.model.*;
 import wild.west.bounty.hunter.repositories.PersonRepository;
@@ -369,7 +370,7 @@ class PersonServiceTest {
         hunter.setReputation(CRUEL);
 
         Equipment knife = new Equipment(null, "Super special knife", null, BigDecimal.valueOf(10));
-        Equipment gun = new Equipment(null, "Super special gun", null, BigDecimal.valueOf(11));
+        EquipmentRequest gun = new EquipmentRequest(null, "Super special gun",  BigDecimal.valueOf(11));
 
         when(personRepository.findById(hunter.getId())).thenReturn(Optional.of(hunter));
 

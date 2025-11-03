@@ -14,6 +14,7 @@ import wild.west.bounty.hunter.controller.dto.EquipmentRequest;
 import wild.west.bounty.hunter.controller.dto.PersonRequest;
 import wild.west.bounty.hunter.exceptions.ResourceNotFoundException;
 import wild.west.bounty.hunter.model.*;
+import wild.west.bounty.hunter.repositories.EquipmentRepository;
 import wild.west.bounty.hunter.repositories.PersonRepository;
 import wild.west.bounty.hunter.response.MurderResponse;
 import wild.west.bounty.hunter.util.PersonUtils;
@@ -33,6 +34,7 @@ import static wild.west.bounty.hunter.functions.person.PersonFunctions.mapPerson
 public class PersonService {
     
     private final PersonRepository personRepository;
+    private final EquipmentRepository equipmentRepository;
 
     private final PagedResourcesAssembler<Person> assembler;
 
@@ -145,8 +147,8 @@ public class PersonService {
         Equipment equipment;
 
         if (equipmentRequest.id() != null){
-            equipment = equipmentRepository.findBy
-        } else{
+            equipment = equipmentRepository.findById(equipmentRequest.id()).orElseThrow(() -> new ResourceNotFoundException("Equipment not found"));
+        } else {
             equipment = mapEquipment.CreateAnEquipmentFromRequest(equipmentRequest);
         }
 
