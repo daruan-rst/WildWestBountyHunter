@@ -25,6 +25,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
+import static wild.west.bounty.hunter.functions.equipment.EquipmentFunctions.mapEquipment;
 import static wild.west.bounty.hunter.model.enums.Reputation.CRUEL;
 
 @ExtendWith(MockitoExtension.class)
@@ -369,15 +370,16 @@ class PersonServiceTest {
 
         hunter.setReputation(CRUEL);
 
+        EquipmentRequest gunRequest = new EquipmentRequest(null, "Super special knife", BigDecimal.valueOf(10));
         Equipment knife = new Equipment(null, "Super special knife", null, BigDecimal.valueOf(10));
-        EquipmentRequest gun = new EquipmentRequest(null, "Super special gun",  BigDecimal.valueOf(11));
+        Equipment gun = mapEquipment.CreateAnEquipmentFromRequest(gunRequest);
 
         when(personRepository.findById(hunter.getId())).thenReturn(Optional.of(hunter));
 
-//        hunter.setEquipments(new ArrayList<>(List.of(knife, gun)));
+        hunter.setEquipments(new ArrayList<>(List.of(knife, gun)));
         when(personRepository.save(any(Person.class))).thenReturn(hunter);
 
-        Person somebody = personService.addEquipment(gun, 1L);
+        Person somebody = personService.addEquipment(gunRequest, 1L);
 
         verify(personRepository, atMostOnce()).save(somebody);
         verify(personRepository, atMostOnce()).findById(hunter.getId());
