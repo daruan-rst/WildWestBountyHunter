@@ -12,6 +12,7 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.PagedModel;
 import wild.west.bounty.hunter.controller.dto.EquipmentRequest;
+import wild.west.bounty.hunter.controller.dto.PersonRequest;
 import wild.west.bounty.hunter.exceptions.ResourceNotFoundException;
 import wild.west.bounty.hunter.model.*;
 import wild.west.bounty.hunter.repositories.PersonRepository;
@@ -26,6 +27,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static wild.west.bounty.hunter.functions.equipment.EquipmentFunctions.mapEquipment;
+import static wild.west.bounty.hunter.functions.person.PersonFunctions.mapPerson;
 import static wild.west.bounty.hunter.model.enums.Reputation.CRUEL;
 
 @ExtendWith(MockitoExtension.class)
@@ -40,30 +42,32 @@ class PersonServiceTest {
     @InjectMocks
     private PersonService personService;
 
-    private Person someone;
+    EquipmentRequest gunRequest = new EquipmentRequest(null, "Super special Gun", BigDecimal.valueOf(10));
+    EquipmentRequest knifeRequest = new EquipmentRequest(null, "Ultra special knife", BigDecimal.valueOf(9));
+    private PersonRequest someoneRequest = new PersonRequest("John Wayne", BigDecimal.TEN, 0L, List.of(gunRequest, knifeRequest));
+
+    Person someone;
     private Pageable pageable;
     private Page<Person> personPage;
     private List<Person> personList;
     private PagedModel<EntityModel<Person>> pagedModel;
 
-//    @Test
-//    void createCitizen_shouldSetAliveToTrue() {
-//        someone = new Citizen();
-//        someone.setId(1L);
-//        someone.setName("John Wayne");
-//        someone.setAlive(false);
-//        when(personRepository.save(any(Person.class))).thenReturn(someone);
-//
-//        // Act
-//        Person citizen = personService.createPerson(someone);
-//
-//        // Assert
-//        assertTrue(citizen.isAlive());
-//        assertInstanceOf(Citizen.class, citizen);
-//        verify(personRepository, times(1)).save(someone);
-//        assertNotNull(citizen.getLinks());
-//        assertTrue(citizen.getLinks().hasLink("self"));
-//    }
+    @Test
+    void createCitizen_shouldSetAliveToTrue() {
+        someone = mapPerson.createPerson(someoneRequest, Citizen.class);
+
+        when(personRepository.save(any(Person.class))).thenReturn(someone);
+
+        // Act
+        Person citizen = personService.createACitizen(someoneRequest);
+
+        // Assert
+        assertTrue(citizen.isAlive());
+        assertInstanceOf(Citizen.class, citizen);
+        verify(personRepository, atMostOnce()).save(someone);
+        assertNotNull(citizen.getLinks());
+        assertTrue(citizen.getLinks().hasLink("self"));
+    }
 //
 //    @Test
 //    void createBountyHunter_shouldSetAliveToTrue() {
