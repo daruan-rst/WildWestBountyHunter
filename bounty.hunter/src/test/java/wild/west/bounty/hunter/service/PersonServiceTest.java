@@ -68,32 +68,24 @@ class PersonServiceTest {
         assertNotNull(citizen.getLinks());
         assertTrue(citizen.getLinks().hasLink("self"));
     }
-//
-//    @Test
-//    void createBountyHunter_shouldSetAliveToTrue() {
-//        someone = new BountyHunter();
-//        someone.setId(1L);
-//        someone.setName("Joanne");
-//        someone.setAlive(false);
-//
-//        BountyHunter hunter = (BountyHunter) someone;
-//
-//        hunter.setReputation(CRUEL);
-//
-//        when(personRepository.save(any(Person.class))).thenReturn(hunter);
-//
-//        // Act
-//        Person citizen = personService.createPerson(hunter);
-//
-//        // Assert
-//        assertTrue(citizen.isAlive());
-//        assertInstanceOf(BountyHunter.class, citizen);
-//        BountyHunter thisBountyHunter = (BountyHunter) citizen;
-//        assertEquals(CRUEL, thisBountyHunter.getReputation());
-//        verify(personRepository, times(1)).save(hunter);
-//        assertNotNull(citizen.getLinks());
-//        assertTrue(citizen.getLinks().hasLink("self"));
-//    }
+
+    @Test
+    void createBountyHunter_shouldSetAliveToTrue() {
+        //given
+        someone = (BountyHunter) mapPerson.createPerson(someoneRequest, BountyHunter.class);
+
+        when(personRepository.save(someone)).thenReturn(someone);
+
+        // Act
+        Person hunter = personService.createABountyHunter(someoneRequest);
+
+        // Assert
+        assertTrue(hunter.isAlive());
+        assertInstanceOf(BountyHunter.class, hunter);
+        verify(personRepository, atMostOnce()).save(someone);
+        assertNotNull(hunter.getLinks());
+        assertTrue(hunter.getLinks().hasLink("self"));
+    }
 //
 //    @Test
 //    void createOutlaw_shouldSetAliveToTrue() {
