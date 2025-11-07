@@ -1,6 +1,5 @@
 package wild.west.bounty.hunter.service;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -86,58 +85,48 @@ class PersonServiceTest {
         assertNotNull(hunter.getLinks());
         assertTrue(hunter.getLinks().hasLink("self"));
     }
-//
-//    @Test
-//    void createOutlaw_shouldSetAliveToTrue() {
-//        someone = new Outlaw();
-//        someone.setId(1L);
-//        someone.setName("John Doe");
-//        someone.setAlive(false);
-//
-//        Outlaw outlaw = (Outlaw) someone;
-//
-//        outlaw.setBountyValue(BigDecimal.valueOf(10000));
-//
-//        when(personRepository.save(any(Person.class))).thenReturn(outlaw);
-//
-//        // Act
-//        Person citizen = personService.createPerson(outlaw);
-//
-//        // Assert
-//        assertTrue(citizen.isAlive());
-//        assertInstanceOf(Outlaw.class, citizen);
-//        Outlaw thisOutlaw = (Outlaw) citizen;
-//        assertEquals(BigDecimal.valueOf(10000), thisOutlaw.getBountyValue());
-//        verify(personRepository, times(1)).save(outlaw);
-//        assertNotNull(citizen.getLinks());
-//        assertTrue(citizen.getLinks().hasLink("self"));
-//    }
-//
-//    @Test
-//    void createSheriff_shouldSetAliveToTrue() {
-//        someone = new Sheriff();
-//        someone.setId(1L);
-//        someone.setName("Joan of Arc");
-//        someone.setAlive(false);
-//
-//        when(personRepository.save(any(Person.class))).thenReturn(someone);
-//
-//        // Act
-//        Person citizen = personService.createPerson(someone);
-//
-//        // Assert
-//        assertTrue(citizen.isAlive());
-//        assertInstanceOf(Sheriff.class, citizen);
-//        verify(personRepository, times(1)).save(someone);
-//        assertNotNull(citizen.getLinks());
-//        assertTrue(citizen.getLinks().hasLink("self"));
-//    }
-//
-//    @Test
-//    void createPerson_shouldHandleNullInput() {
-//        // Arrange & Act & Assert
-//        assertThrows(NullPointerException.class, () -> personService.createPerson(null));
-//    }
+
+    @Test
+    void createOutlaw_shouldSetAliveToTrue() {
+        //given
+        someone = (Outlaw) mapPerson.createPerson(someoneRequest, Outlaw.class);
+
+        when(personRepository.save(someone)).thenReturn(someone);
+
+        // Act
+        Person outlaw = personService.createAnOutlaw(someoneRequest);
+
+        // Assert
+        assertTrue(outlaw.isAlive());
+        assertInstanceOf(Outlaw.class, outlaw);
+        verify(personRepository, atMostOnce()).save(someone);
+        assertNotNull(outlaw.getLinks());
+        assertTrue(outlaw.getLinks().hasLink("self"));
+    }
+
+    @Test
+    void createSheriff_shouldSetAliveToTrue() {
+        //given
+        someone = (Sheriff) mapPerson.createPerson(someoneRequest, Sheriff.class);
+
+        when(personRepository.save(someone)).thenReturn(someone);
+
+        // Act
+        Person sheriff = personService.createASheriff(someoneRequest);
+
+        // Assert
+        assertTrue(sheriff.isAlive());
+        assertInstanceOf(Sheriff.class, sheriff);
+        verify(personRepository, atMostOnce()).save(someone);
+        assertNotNull(sheriff.getLinks());
+        assertTrue(sheriff.getLinks().hasLink("self"));
+    }
+
+    @Test
+    void createPerson_shouldHandleNullInput() {
+        // Arrange & Act & Assert
+        assertThrows(NullPointerException.class, () -> personService.createACitizen(null));
+    }
 
     @Test
     void findAll_shouldReturnPagedModel() {
