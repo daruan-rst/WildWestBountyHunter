@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
 import org.springframework.stereotype.Service;
 import wild.west.bounty.hunter.controller.EquipmentController;
-import wild.west.bounty.hunter.controller.dto.EquipmentRequest;
+import wild.west.bounty.hunter.controller.dto.request.EquipmentRequest;
 import wild.west.bounty.hunter.exceptions.ResourceNotFoundException;
 import wild.west.bounty.hunter.model.Equipment;
 import wild.west.bounty.hunter.model.Person;

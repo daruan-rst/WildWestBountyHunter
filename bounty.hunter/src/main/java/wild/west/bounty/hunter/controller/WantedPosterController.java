@@ -14,7 +14,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 import wild.west.bounty.hunter.model.WantedPoster;
 import wild.west.bounty.hunter.model.BountyHunter;
-import wild.west.bounty.hunter.request.WantedPosterRequest;
+import wild.west.bounty.hunter.controller.dto.request.WantedPosterRequest;
 import wild.west.bounty.hunter.service.WantedPosterService;
 
 @RestController

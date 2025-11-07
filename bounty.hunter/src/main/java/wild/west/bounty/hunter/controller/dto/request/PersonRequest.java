@@ -1,4 +1,4 @@
-package wild.west.bounty.hunter.controller.dto;
+package wild.west.bounty.hunter.controller.dto.request;
 
 import jakarta.validation.constraints.Min;
 

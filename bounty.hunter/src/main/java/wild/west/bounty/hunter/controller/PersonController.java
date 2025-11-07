@@ -14,11 +14,10 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import wild.west.bounty.hunter.controller.dto.EquipmentRequest;
-import wild.west.bounty.hunter.controller.dto.PersonRequest;
-import wild.west.bounty.hunter.model.Equipment;
+import wild.west.bounty.hunter.controller.dto.request.EquipmentRequest;
+import wild.west.bounty.hunter.controller.dto.request.PersonRequest;
 import wild.west.bounty.hunter.model.Person;
-import wild.west.bounty.hunter.response.MurderResponse;
+import wild.west.bounty.hunter.controller.dto.response.MurderResponse;
 import wild.west.bounty.hunter.service.PersonService;
 
 @RestController

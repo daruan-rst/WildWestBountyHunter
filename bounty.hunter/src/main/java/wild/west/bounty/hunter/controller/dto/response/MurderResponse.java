@@ -1,4 +1,4 @@
-package wild.west.bounty.hunter.response;
+package wild.west.bounty.hunter.controller.dto.response;
 
 import lombok.AllArgsConstructor;
 import wild.west.bounty.hunter.model.Outlaw;

@@ -12,8 +12,9 @@ import wild.west.bounty.hunter.model.*;
 import wild.west.bounty.hunter.repositories.WantedPosterRepository;
 import wild.west.bounty.hunter.repositories.PersonRepository;
 import wild.west.bounty.hunter.repositories.TownRepository;
-import wild.west.bounty.hunter.request.WantedPosterRequest;
+import wild.west.bounty.hunter.controller.dto.request.WantedPosterRequest;
 
+import java.math.BigDecimal;
 import java.util.NoSuchElementException;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
@@ -46,7 +47,7 @@ public class WantedPosterService {
         WantedPoster wantedPoster = new WantedPoster();
         wantedPoster.setOutlaw((Outlaw) person);
         wantedPoster.setOutlawDescription(wantedPosterRequest.description());
-        wantedPoster.setReward(wantedPosterRequest.reward());
+        wantedPoster.setReward(((Outlaw) person).getBountyValue());
         wantedPoster.setLastPlace(lastTown);
         wantedPoster.setPosterName("WANTED! DEAD OR ALIVE");
         wantedPoster.add(linkTo(methodOn(WantedPosterController.class).createAWantedPoster(wantedPosterRequest)).withSelfRel());
@@ -70,11 +71,16 @@ public class WantedPosterService {
         }
 
     public WantedPoster udpateBountyWantedPoster(long id, WantedPosterRequest newBountyWantedPoster){
+
         log.info("Updating a Bounty WantedPoster");
+
         WantedPoster wantedPoster = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No BountyWantedPoster found for this id"));
+
+        BigDecimal newBounty = newBountyWantedPoster.reward().compareTo(wantedPoster.getReward()) > 0 ? newBountyWantedPoster.reward() : wantedPoster.getReward();
+
         Town lastTown = townRepository.findByTownName(newBountyWantedPoster.lastTown()).orElseThrow(() -> new ResourceNotFoundException("No BountyWantedPoster found for this id"));
         wantedPoster.setLastPlace(lastTown);
-        wantedPoster.setReward(newBountyWantedPoster.reward());
+        wantedPoster.setReward(newBounty);
         wantedPoster.setOutlawDescription(newBountyWantedPoster.description());
         wantedPoster.add(linkTo(methodOn(WantedPosterController.class).updateWantedPoster(id, newBountyWantedPoster)).withSelfRel());
         repository.save(wantedPoster);

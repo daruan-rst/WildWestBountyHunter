@@ -1,14 +1,13 @@
 package wild.west.bounty.hunter.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import wild.west.bounty.hunter.controller.dto.EquipmentRequest;
+import wild.west.bounty.hunter.controller.dto.request.EquipmentRequest;
 import wild.west.bounty.hunter.model.Equipment;
 import wild.west.bounty.hunter.service.EquipmentService;
 

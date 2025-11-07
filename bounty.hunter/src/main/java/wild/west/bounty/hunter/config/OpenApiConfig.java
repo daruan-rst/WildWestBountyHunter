@@ -13,10 +13,10 @@ public class OpenApiConfig {
     OpenAPI customOpenAPI(){
        return new OpenAPI()
                .info(new Info()
-                       .title("API proof of concept de melhorias etc etc")
-                       .version("COLOQUE AQUI O NÚMERO DA SUA VERSÃO")
-                       .description("Descrição qualquer sobre essa API")
-                       .termsOfService("www.termosdeserviço.com")
+                       .title("API proof of concept")
+                       .version("1")
+                       .description("This wild west themed api was designed for me to practice some concepts on java development")
+                       .termsOfService("www.termosdeservico.com")
                        .license(
                                new License()
                                 .name("Apache 2.0")

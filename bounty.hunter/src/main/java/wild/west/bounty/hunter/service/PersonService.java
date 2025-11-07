@@ -10,13 +10,13 @@ import org.springframework.hateoas.Link;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.stereotype.Service;
 import wild.west.bounty.hunter.controller.PersonController;
-import wild.west.bounty.hunter.controller.dto.EquipmentRequest;
-import wild.west.bounty.hunter.controller.dto.PersonRequest;
+import wild.west.bounty.hunter.controller.dto.request.EquipmentRequest;
+import wild.west.bounty.hunter.controller.dto.request.PersonRequest;
 import wild.west.bounty.hunter.exceptions.ResourceNotFoundException;
 import wild.west.bounty.hunter.model.*;
 import wild.west.bounty.hunter.repositories.EquipmentRepository;
 import wild.west.bounty.hunter.repositories.PersonRepository;
-import wild.west.bounty.hunter.response.MurderResponse;
+import wild.west.bounty.hunter.controller.dto.response.MurderResponse;
 import wild.west.bounty.hunter.util.PersonUtils;
 
 import java.math.BigDecimal;
