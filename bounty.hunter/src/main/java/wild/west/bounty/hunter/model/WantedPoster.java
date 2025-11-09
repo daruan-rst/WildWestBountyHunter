@@ -1,5 +1,6 @@
 package wild.west.bounty.hunter.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -34,6 +35,7 @@ public class WantedPoster extends RepresentationModel<WantedPoster> implements S
 
     @OneToOne
     @JoinColumn(name="outlaw")
+    @JsonBackReference
     private Outlaw outlaw;
 
     @Column(name="outlaw_description")
