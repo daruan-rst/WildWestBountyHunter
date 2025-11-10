@@ -37,7 +37,7 @@ public class WantedPosterController {
                     @ApiResponse(description = "Not found", responseCode = "404", content = @Content),
                     @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
             })
-    public WantedPoster createAWantedPoster(WantedPosterRequest contractRequest){
+    public WantedPoster createAWantedPoster(@RequestBody WantedPosterRequest contractRequest){
         return service.createWantedPoster(contractRequest);
     }
 
