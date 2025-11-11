@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Proxy;
 import org.springframework.hateoas.RepresentationModel;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 
@@ -25,6 +26,20 @@ import java.util.List;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "_person_type", discriminatorType = DiscriminatorType.STRING, length = 64)
 @Entity
+@Proxy(lazy = false)
+
+/**
+ * TODO: Escolher por tornar a classe Person como sealed tem as suas consequencias:
+ * O Hibernate sempre cria proxies dinâmicos (HibernateProxy) das suas entidades para fazer lazy loading.
+ * Mas Person é sealed — e classes sealed somente permitem subclasses listadas explicitamente no permits.
+ * Isso faz com que o Hibernate tente gerar uma classe extra:  Person$HibernateProxy$qA1qJB9s
+ *
+ * Resta escolher o nosso veneno:
+ * 1. Remover o sealed da classe Person - o que seria mais aconselhado
+ * 2. Tornar a classe Person não-proxiável - e eu tomei essa decisão usando a anotação @Proxy(lazy = false)
+ *  -> Acabei optando pela segunda por se tratar de um exercício prático de programação. Meu objetivo no momento é utilizar sealed classes
+ * -> Vale lembrar que isso acaba com o lazy loading
+ **/
 public sealed abstract class Person extends RepresentationModel<Person> implements Serializable permits Citizen, Outlaw, Sheriff, BountyHunter {
 
     @Serial
