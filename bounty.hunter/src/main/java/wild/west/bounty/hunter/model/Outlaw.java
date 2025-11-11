@@ -24,7 +24,7 @@ import java.math.BigDecimal;
 @JsonTypeName("OUTLAW")
 @DiscriminatorValue("OUTLAW")
 @Entity
-public class Outlaw extends Person implements Serializable {
+public final class Outlaw extends Person implements Serializable {
 
     @Serial
     private static final long serialVersionUID =  1L;

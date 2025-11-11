@@ -25,7 +25,7 @@ import java.util.List;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "_person_type", discriminatorType = DiscriminatorType.STRING, length = 64)
 @Entity
-public abstract class Person extends RepresentationModel<Person> implements Serializable {
+public sealed abstract class Person extends RepresentationModel<Person> implements Serializable permits Citizen, Outlaw, Sheriff, BountyHunter {
 
     @Serial
     private static final long serialVersionUID = 1L;

@@ -17,7 +17,7 @@ import java.io.Serial;
 @JsonTypeName("BOUNTY_HUNTER")
 @DiscriminatorValue("BOUNTY_HUNTER")
 @Entity
-public class BountyHunter extends Person {
+public final class BountyHunter extends Person {
 
     @Serial
     private static final long serialVersionUID =  1L;

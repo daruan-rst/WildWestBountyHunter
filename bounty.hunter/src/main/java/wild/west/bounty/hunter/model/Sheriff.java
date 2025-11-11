@@ -14,7 +14,7 @@ import java.io.Serial;
 @JsonTypeName("SHERIFF")
 @DiscriminatorValue("SHERIFF")
 @Entity
-public class Sheriff extends Person{
+public final class Sheriff extends Person{
 
     @Serial
     private static final long serialVersionUID =  1L;
