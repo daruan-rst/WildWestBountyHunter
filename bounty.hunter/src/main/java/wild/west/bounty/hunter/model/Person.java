@@ -40,7 +40,13 @@ import java.util.List;
  *  -> Acabei optando pela segunda por se tratar de um exercício prático de programação. Meu objetivo no momento é utilizar sealed classes
  * -> Vale lembrar que isso acaba com o lazy loading
  **/
-public sealed abstract class Person extends RepresentationModel<Person> implements Serializable permits Citizen, Outlaw, Sheriff, BountyHunter {
+
+/**
+ * Eu entendi que sealed classes e proxies não combinam. Varios erros surgiram no endpoint PUT kill/{killerId}/{victimId}
+ * TODO: Procurar alternativas para usar sealed classes
+ */
+
+public abstract class Person extends RepresentationModel<Person> implements Serializable  {
 
     @Serial
     private static final long serialVersionUID = 1L;

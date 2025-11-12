@@ -193,12 +193,12 @@ public class PersonService {
                 .add(
                     victim.getEquipments().isEmpty() ?
                     BigDecimal.ZERO :
-                    victim.getMoney().add(victim.getEquipments()
+                    victim.getEquipments()
                     .stream()
                     .map(eq -> eq.getValue()).toList()
                         .stream()
                         .reduce( (a,b) -> BigDecimal.ZERO.add(b))
-                        .get())
+                        .get()
                 );
     }
 
